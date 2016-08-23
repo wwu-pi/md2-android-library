@@ -111,6 +111,6 @@ public class Md2ViewManager {
      * Go to initial workflow selection screen
      */
     public void goToStartActivity(){
-        this.goTo("StartActivity");
+        this.goTo("md2.mamlproject.StartActivity");
     }
 }
