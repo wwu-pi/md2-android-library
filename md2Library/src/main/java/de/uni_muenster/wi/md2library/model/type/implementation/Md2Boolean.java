@@ -21,7 +21,7 @@ public class Md2Boolean extends AbstractMd2DataType {
      *
      * @param value the value
      */
-    Md2Boolean(boolean value) {
+    public Md2Boolean(boolean value) {
         super(value);
     }
 
