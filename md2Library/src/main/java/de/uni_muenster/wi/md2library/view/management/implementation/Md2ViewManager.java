@@ -107,4 +107,10 @@ public class Md2ViewManager {
         return (widget != null) ? widget.getValue() : Md2WidgetRegistry.getInstance().getWidgetValue(widgetId);
     }
 
+    /**
+     * Go to initial workflow selection screen
+     */
+    public void goToStartActivity(){
+        this.goTo("md2.mamlproject.StartActivity");
+    }
 }
