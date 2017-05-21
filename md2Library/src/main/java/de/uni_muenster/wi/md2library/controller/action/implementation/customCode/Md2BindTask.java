@@ -84,6 +84,8 @@ public class Md2BindTask implements Md2CustomCodeTask {
                 throw new Md2WidgetNotCreatedException();
             }
 
+
+
             switch (eventType) {
                 case ON_CHANGE:
                     widget.getOnChangedHandler().registerAction(action);
@@ -100,6 +102,7 @@ public class Md2BindTask implements Md2CustomCodeTask {
                     break;
                 case ON_LEFT_SWIPE:
                     if(widget instanceof Md2Button){
+                        System.out.println("neu hinzugefügt");
                         Md2Button b = (Md2Button) widget;
                         b.getOnSwipeHandler().registerAction(action, false);
                     }

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Type;
+import de.uni_muenster.wi.md2library.view.widgets.implementation.Md2Button;
 import de.uni_muenster.wi.md2library.view.widgets.interfaces.Md2Content;
 import de.uni_muenster.wi.md2library.view.widgets.interfaces.Md2Widget;
 
@@ -73,6 +74,11 @@ public class Md2WidgetRegistry {
 
         widget.setOnClickHandler(savedWidget.getOnClickHandler());
         widget.setOnChangedHandler(savedWidget.getOnChangedHandler());
+        if(savedWidget instanceof Md2Button){
+            Md2Button b = (Md2Button) widget;
+            Md2Button sb = (Md2Button) savedWidget;
+            b.setOnSwipeHandler(sb.getOnSwipeHandler());
+        }
 
         try {
             Md2Content content = (Md2Content) widget;

@@ -88,6 +88,7 @@ public abstract class AbstractMd2OnSwipeHandler extends AbstractMd2WidgetEventHa
                     // den Klick an den OnClickHandler weiterleiten
                     if (view instanceof Md2Button){
                         Md2Button b = (Md2Button) view;
+                        System.out.println("klick1");
                         b.getOnClickHandler().execute();
                     }
                 }

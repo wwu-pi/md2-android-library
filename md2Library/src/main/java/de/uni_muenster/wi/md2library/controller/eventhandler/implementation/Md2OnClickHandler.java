@@ -42,6 +42,12 @@ public class Md2OnClickHandler extends AbstractMd2WidgetEventHandler implements 
     }
 
     @Override
+    public void execute(){
+        super.execute();
+        System.out.println("execute");
+    }
+
+    @Override
     public String toString() {
         StringBuffer result = new StringBuffer();
         result.append("MD2OnClickHandler: #Actions = " + getActions().size() + "; ");
