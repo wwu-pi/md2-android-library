@@ -37,29 +37,21 @@ public class SensorHelper {
         //Swicht Case nicht problemlos anwendbar in der verwendeten JavaVersion
         //Debug Syso
         System.out.println("IF");
-        if(sensorType.equals("luxmeter")){
-            System.out.println("Switch luxmeter");
-            mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
-        }
         if(sensorType.equals("accelerometer")){
             System.out.println("Switch accelerometer");
             mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         }
-        if(sensorType.equals("compass")){
-            System.out.println("Switch compass");
-            mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        if(sensorType.equals("proximity")){
+            System.out.println("Switch proximity");
+            mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
         }
         if(sensorType.equals("gyroskop")){
             System.out.println("Switch gyroskop");
             mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         }
-        if(sensorType.equals("pulsmesser")){
+        if(sensorType.equals("heartrate")){
             System.out.println("Switch pulsmesser");
-            mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_HEART_BEAT);
-        }
-        if(sensorType.equals("schrittzähler")){
-            System.out.println("Switch schrittzähler");
-            mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
+            mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
         }
 
         //Eventlistener für den Sensor
@@ -85,6 +77,7 @@ public class SensorHelper {
             }
             else{
                 System.out.println("Sensor:" + this.sensorType + " nicht gefunden:");
+                setSensorValue(Float.parseFloat("-99999.99"));
             }
         }
     }

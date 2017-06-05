@@ -102,7 +102,6 @@
     <orderEntry type="library" exported="" name="junit-4.12" level="project" />
     <orderEntry type="library" exported="" name="reflections-0.9.10" level="project" />
     <orderEntry type="library" exported="" name="annotations-2.0.1" level="project" />
-    <orderEntry type="library" exported="" name="android-android-25" level="project" />
   </component>
   <component name="org.twodividedbyzero.idea.findbugs">
     <option name="_basePreferences">
