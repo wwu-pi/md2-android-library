@@ -96,14 +96,13 @@ public abstract class AbstractMd2OnSwipeHandler extends AbstractMd2WidgetEventHa
                 if (rightSwipe) {
                     rightSwipe = false;
                     return onSwipeRight();
-                } else {
-                    // den Klick an den OnClickHandler weiterleiten
-                    if (view instanceof Md2Button){
-                        Md2Button b = (Md2Button) view;
-                        System.out.println("klick1");
-                        b.getOnClickHandler().execute();
-                    }
                 }
+                    // den Klick an den OnClickHandler weiterleiten
+                    //if (view instanceof Md2Button){
+                    //    Md2Button b = (Md2Button) view;
+                    //    System.out.println("klick1");
+                    //    b.getOnClickHandler().execute();
+                    //}
                 break;
             }
 
