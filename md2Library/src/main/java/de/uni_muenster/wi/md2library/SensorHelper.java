@@ -1,4 +1,4 @@
-package md2.pswa_demo;
+package de.uni_muenster.wi.md2library;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -12,7 +12,8 @@ import de.uni_muenster.wi.md2library.exception.Md2WidgetNotCreatedException;
 import de.uni_muenster.wi.md2library.model.type.implementation.Md2Sensor;
 
 /**
- * Created by i7-3770k on 28.05.2017.
+ * Created by Tobias Nauber on 28.05.2017.
+ * PS-Watchapp
  */
 
 public class SensorHelper {
@@ -34,23 +35,16 @@ public class SensorHelper {
 
         mSensorManager = (SensorManager) mContext.getSystemService(mContext.SENSOR_SERVICE);
 
-        //Swicht Case nicht problemlos anwendbar in der verwendeten JavaVersion
-        //Debug Syso
-        System.out.println("IF");
         if(sensorType.equals("accelerometer")){
-            System.out.println("Switch accelerometer");
             mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         }
         if(sensorType.equals("proximity")){
-            System.out.println("Switch proximity");
             mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
         }
         if(sensorType.equals("gyroskop")){
-            System.out.println("Switch gyroskop");
             mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         }
         if(sensorType.equals("heartrate")){
-            System.out.println("Switch pulsmesser");
             mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
         }
 
@@ -69,20 +63,19 @@ public class SensorHelper {
 
         //Prüfen ob SensorManager vorhanden
         if(mSensorManager!=null){
-            //Prüfen ob der entsprechende Sensor überhaupt verfügbar ist sieh Initialisierung
+            //Prüfen ob der entsprechende Sensor überhaupt verfügbar ist siehe Initialisierung
             if(mSensor != null){
                 mSensorManager.registerListener(_SensorEventListener, mSensor, mSensorManager.SENSOR_DELAY_NORMAL);
-                //Debug
                 System.out.println("Sensor:" + this.sensorType + " gefunden:");
             }
             else{
-                System.out.println("Sensor:" + this.sensorType + " nicht gefunden:");
+                System.out.println("Sensor:" + this.sensorType + " nicht gefunden!!!");
                 setSensorValue(Float.parseFloat("-99999.99"));
             }
         }
     }
 
-    // /Konstruktor damit getSystemService funktioniert, da diese Klasse keine Activity ist muss der Context übergeben werden
+    //ParameterKonstruktor für Axis
     public SensorHelper(Context mContext, String _varName, String _sensorType, final String Axis) {
         this.mContext = mContext;
         this.varName = _varName;
@@ -90,15 +83,10 @@ public class SensorHelper {
 
         mSensorManager = (SensorManager) mContext.getSystemService(mContext.SENSOR_SERVICE);
 
-        //Swicht Case nicht problemlos anwendbar in der verwendeten JavaVersion
-        //Debug Syso
-        System.out.println("IF");
         if(sensorType.equals("accelerometer")){
-            System.out.println("Switch accelerometer");
             mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         }
         if(sensorType.equals("gyroskop")){
-            System.out.println("Switch gyroskop");
             mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         }
         //Eventlistener für den Sensor
@@ -107,15 +95,12 @@ public class SensorHelper {
             public void onSensorChanged(SensorEvent event) {
                 if(Axis.equals("X")){
                     setSensorValue(event.values[0]);
-                    System.out.println("Achse: X");
                 }
                 if(Axis.equals("Y")){
                     setSensorValue(event.values[1]);
-                    System.out.println("Achse: Y");
                 }
                 if(Axis.equals("Z")){
                     setSensorValue(event.values[2]);
-                    System.out.println("Achse: Z");
                 }
             }
 
@@ -130,11 +115,10 @@ public class SensorHelper {
             //Prüfen ob der entsprechende Sensor überhaupt verfügbar ist sieh Initialisierung
             if(mSensor != null){
                 mSensorManager.registerListener(_SensorEventListener, mSensor, mSensorManager.SENSOR_DELAY_NORMAL);
-                //Debug
                 System.out.println("Sensor:" + this.sensorType + " gefunden:");
             }
             else{
-                System.out.println("Sensor:" + this.sensorType + " nicht gefunden:");
+                System.out.println("Sensor:" + this.sensorType + " nicht gefunden!!!");
                 setSensorValue(Float.parseFloat("-99999.99"));
             }
         }
