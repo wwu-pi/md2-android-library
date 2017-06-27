@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 
 import de.uni_muenster.wi.md2library.controller.eventhandler.implementation.Md2OnChangedHandler;
 import de.uni_muenster.wi.md2library.controller.eventhandler.implementation.Md2OnClickHandler;
+import de.uni_muenster.wi.md2library.controller.eventhandler.implementation.Md2OnLongClickHandler;
 import de.uni_muenster.wi.md2library.controller.eventhandler.implementation.Md2ButtonOnSwipeHandler;
 import de.uni_muenster.wi.md2library.model.type.implementation.Md2String;
 import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Type;
@@ -33,6 +34,11 @@ public class Md2Button extends android.widget.Button implements Md2Content {
     protected Md2OnClickHandler onClickHandler;
     /**
      * The On changed handler.
+     */
+
+    protected Md2OnLongClickHandler onLongClickHandler;
+    /**
+     * The OnLong changed handler.
      */
     protected Md2OnChangedHandler onChangedHandler;
     /**
@@ -97,6 +103,7 @@ public class Md2Button extends android.widget.Button implements Md2Content {
         this.setOnChangedHandler(button.getOnChangedHandler());
         this.setOnClickHandler(button.getOnClickHandler());
         this.setOnSwipeHandler(button.getOnSwipeHandler());
+        this.setOnLongClickHandler(button.getOnLongClickHandler());
         this.setDisabled(!button.isDisabled());
         this.setValue(button.getValue());
     }
@@ -108,6 +115,7 @@ public class Md2Button extends android.widget.Button implements Md2Content {
         this.setOnChangedHandler(new Md2OnChangedHandler());
         this.setOnClickHandler(new Md2OnClickHandler());
         this.setOnSwipeHandler(new Md2ButtonOnSwipeHandler());
+        this.setOnLongClickHandler( new Md2OnLongClickHandler());
         this.widgetId = -1;
     }
 
@@ -129,6 +137,18 @@ public class Md2Button extends android.widget.Button implements Md2Content {
         if (!value.equals(oldValue)) {
             this.getOnChangedHandler().execute();
         }
+    }
+
+    @Override
+    public Md2OnLongClickHandler getOnLongClickHandler() {
+        return this.onLongClickHandler;
+    }
+
+    @Override
+    public boolean setOnLongClickHandler(Md2OnLongClickHandler onLongClickHandler) {
+        this.setOnLongClickListener(onLongClickHandler);
+        this.onLongClickHandler = onLongClickHandler;
+        return true;
     }
 
     @Override

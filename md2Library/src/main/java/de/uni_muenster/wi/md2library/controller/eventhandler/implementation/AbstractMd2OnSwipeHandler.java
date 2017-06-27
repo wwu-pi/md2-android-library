@@ -1,6 +1,7 @@
 package de.uni_muenster.wi.md2library.controller.eventhandler.implementation;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,6 +26,7 @@ public abstract class AbstractMd2OnSwipeHandler extends AbstractMd2WidgetEventHa
     private float xmove;
     private boolean rightSwipe = false;
     private boolean leftSwipe = false;
+    private Rect rect;
 
 
     /**
@@ -55,8 +57,17 @@ public abstract class AbstractMd2OnSwipeHandler extends AbstractMd2WidgetEventHa
         switch (event.getAction()) {
              //first Touch
             case MotionEvent.ACTION_DOWN: {
+
                 //disable scroll
+                Button b = (Button) view;
+                System.out.println(b.getText());
+                rect = new Rect(view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
+                int x = (int)(event.getX());
+                int y = (int )(event.getY());
+                System.out.println(rect.contains(x,y));
+
                 view.getParent().requestDisallowInterceptTouchEvent(true);
+
                 //set xtouch and reset xmove
                 xtouch = event.getX();
                 xmove = xtouch;
@@ -65,6 +76,7 @@ public abstract class AbstractMd2OnSwipeHandler extends AbstractMd2WidgetEventHa
 
             //release
             case MotionEvent.ACTION_UP: {
+
                 //decide if swiped
                 float width = view.getWidth();
                 float abs = Math.abs(xmove - xtouch);
@@ -84,24 +96,27 @@ public abstract class AbstractMd2OnSwipeHandler extends AbstractMd2WidgetEventHa
                 if (rightSwipe) {
                     rightSwipe = false;
                     return onSwipeRight();
-                } else {
-                    // den Klick an den OnClickHandler weiterleiten
-                    if (view instanceof Md2Button){
-                        Md2Button b = (Md2Button) view;
-                        System.out.println("klick1");
-                        b.getOnClickHandler().execute();
-                    }
                 }
+                    // den Klick an den OnClickHandler weiterleiten
+                    //if (view instanceof Md2Button){
+                    //    Md2Button b = (Md2Button) view;
+                    //    System.out.println("klick1");
+                    //    b.getOnClickHandler().execute();
+                    //}
                 break;
             }
 
             //swipe: change xmove
             case MotionEvent.ACTION_MOVE: {
+                if(!rect.contains(view.getLeft() + (int) event.getX(), view.getTop() + (int) event.getY())){
+                    view.getParent().requestDisallowInterceptTouchEvent(false);
+                }
+
                 xmove = event.getX();
                 break;
             }
         }
-        return true;
+        return false;
     }
 
 }
