@@ -2,6 +2,7 @@ package de.uni_muenster.wi.md2library.model.dataStore.implementation;
 
 import java.util.HashMap;
 
+import de.uni_muenster.wi.md2library.model.dataStore.interfaces.Md2DataStore;
 import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Entity;
 
 /**
