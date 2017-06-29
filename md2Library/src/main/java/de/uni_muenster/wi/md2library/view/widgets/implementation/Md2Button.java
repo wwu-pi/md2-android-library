@@ -22,7 +22,6 @@ import de.uni_muenster.wi.md2library.view.widgets.interfaces.Md2Content;
 //added swipe support 12.05.2017
 
 public class Md2Button extends android.widget.Button implements Md2Content {
-
     /**
      * The Widget id.
      */
@@ -199,4 +198,7 @@ public class Md2Button extends android.widget.Button implements Md2Content {
     public Md2Button copy() {
         return new Md2Button(this);
     }
+
 }
+
+

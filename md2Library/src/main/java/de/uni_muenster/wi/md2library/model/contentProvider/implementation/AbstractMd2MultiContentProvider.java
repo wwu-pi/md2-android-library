@@ -17,11 +17,21 @@ private Collection<Md2Entity> entities;
 
 private String key;
 private Md2DataStore dataStore;
+	private int currentIndex;
+
+	public void setCurrentIndex(int i){
+		this.currentIndex = i;
+	}
+
+	public int getCurrentIndex(){
+		return currentIndex;
+	}
 
 public AbstractMd2MultiContentProvider(String key) {
 	super();
-	//this.entities=new ArrayList<Md2Entity>();
+	this.entities=new ArrayList<Md2Entity>();
 	this.setKey(key);
+	currentIndex = 0;
 }
 
 public AbstractMd2MultiContentProvider(String key, Md2DataStore store){
@@ -39,6 +49,10 @@ public void addAll(List<Md2Entity> list){entities.addAll(list);}
 
 public void remove(WhereCondition conditions){
 
+}
+
+public void remove(int i){
+	((ArrayList<Md2Entity>)entities).remove(i);
 }
 
 public void removeAll(){
@@ -60,6 +74,10 @@ return evaluateWhereCondition(conditions);
 public Collection<Md2Entity> getContents(){
 	return entities;
 
+}
+
+public ArrayList<Md2Entity> getContentsList(){
+	return ((ArrayList<Md2Entity>) entities);
 }
 
 public String getKey() {
