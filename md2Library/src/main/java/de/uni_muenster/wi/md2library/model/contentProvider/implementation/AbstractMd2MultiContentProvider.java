@@ -94,6 +94,6 @@ public void load(){
 
 	}
 
-
+	public void remove(){}
 }
 
