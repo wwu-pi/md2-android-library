@@ -1,5 +1,6 @@
 package de.uni_muenster.wi.md2library.model.contentProvider.interfaces;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -14,7 +15,9 @@ public interface Md2MultiContentProvider  extends IContentProvider{
 
  public Collection<Md2Entity> getContents();
 
+public void setCurrentIndex(int i);
 
+ public ArrayList<Md2Entity> getContentsList();
 
 
 }

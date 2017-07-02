@@ -4,6 +4,7 @@ import de.uni_muenster.wi.md2library.model.contentProvider.implementation.Abstra
 import de.uni_muenster.wi.md2library.model.contentProvider.implementation.AbstractMd2MultiContentProvider;
 import de.uni_muenster.wi.md2library.model.contentProvider.implementation.Md2ContentProviderRegistry;
 import de.uni_muenster.wi.md2library.model.contentProvider.interfaces.Md2MultiContentProvider;
+import de.uni_muenster.wi.md2library.model.type.implementation.AbstractMd2Entity;
 import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Entity;
 
 /**
@@ -28,7 +29,6 @@ public class Md2ContentProviderAddAction extends AbstractMd2Action {
         AbstractMd2MultiContentProvider cp =(AbstractMd2MultiContentProvider) Md2ContentProviderRegistry.getInstance().getContentMultiProvider(contentProvider);
         if(Md2ContentProviderRegistry.getInstance().getContentProvider(contentProviderSource)!=null) {
             AbstractMd2ContentProvider cps = (AbstractMd2ContentProvider) Md2ContentProviderRegistry.getInstance().getContentProvider(contentProviderSource);
-
             cp.add(cps.getContent());}
         else if (Md2ContentProviderRegistry.getInstance().getContentMultiProvider(contentProviderSource)!=null){
             Md2MultiContentProvider cps =  Md2ContentProviderRegistry.getInstance().getContentMultiProvider(contentProviderSource);
