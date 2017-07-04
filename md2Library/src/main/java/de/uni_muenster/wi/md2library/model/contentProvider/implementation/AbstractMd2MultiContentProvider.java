@@ -9,6 +9,7 @@ import de.uni_muenster.wi.md2library.model.contentProvider.interfaces.Md2MultiCo
 import de.uni_muenster.wi.md2library.model.dataStore.interfaces.Md2DataStore;
 import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Entity;
 import de.uni_muenster.wi.md2library.controller.action.implementation.WhereCondition;
+import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Type;
 
 public abstract class AbstractMd2MultiContentProvider implements Md2MultiContentProvider{
 
@@ -115,7 +116,9 @@ public void load(){
 	public void remove(int i){
 		((ArrayList<Md2Entity>)entities).remove(i);
 	}
+
+	public abstract Md2Type getValue(int entityIndex, String attribute);
+	public abstract void setValue(int entityIndex, String name, Md2Type value);
+
 }
-
-
 
