@@ -65,6 +65,7 @@ public Md2Entity evaluateWhereCondition(WhereCondition condition){
 
 
 
+
 public Md2Entity get(WhereCondition conditions){
 return evaluateWhereCondition(conditions);
 
@@ -117,7 +118,9 @@ public void load(){
 		((ArrayList<Md2Entity>)entities).remove(i);
 	}
 
-	public abstract Md2Type getValue(int entityIndex, String attribute);
+	public Md2Type getValue(int entityIndex, String attribute){
+		return (((ArrayList<Md2Entity>) entities).get(entityIndex).get(attribute));
+	};
 	public abstract void setValue(int entityIndex, String name, Md2Type value);
 
 }
