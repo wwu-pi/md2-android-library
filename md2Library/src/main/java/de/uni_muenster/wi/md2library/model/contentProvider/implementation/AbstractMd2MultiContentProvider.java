@@ -44,14 +44,6 @@ super();
 	currentIndex = 0;
 }
 
-public void setCurrentIndex(int i){
-	currentIndex = i;
-}
-
-public int getCurrentIndex(){
-	return currentIndex;
-}
-
 public void add( Md2Entity entity ){
 entities.add(entity);
 }
@@ -63,9 +55,10 @@ public void remove(WhereCondition conditions){
 
 }
 
-public void remove(int i){
-	((ArrayList<Md2Entity>)entities).remove(i);
-}
+//TODO Merge
+//public void remove(int i){
+//	((ArrayList<Md2Entity>)entities).remove(i);
+//}
 
 public void removeAll(){
 this.entities.clear();

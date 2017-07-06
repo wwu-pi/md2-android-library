@@ -34,14 +34,6 @@ public class Md2ButtonOnSwipeHandler extends AbstractMd2OnSwipeHandler implement
         rsh = new Md2OnRightSwipeHandler();
     }
 
-    public Md2OnLeftSwipeHandler getLeftSwipeHandler(){
-        return lsh;
-    }
-
-    public Md2OnRightSwipeHandler getRightSwipeHandler(){
-        return rsh;
-    }
-
     @Override
     public boolean onSwipeRight() {
         System.out.println("swiped right");

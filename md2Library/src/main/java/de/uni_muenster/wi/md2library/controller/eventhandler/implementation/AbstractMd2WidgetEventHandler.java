@@ -49,11 +49,11 @@ AbstractMd2WidgetEventHandler extends AbstractMd2EventHandler implements Md2Widg
         super.removeAction(action);
     }
 
-    public void addActions(ArrayList<Md2Action> actions){
+    /*public void addActions(ArrayList<Md2Action> actions){
         for(int i = 0; i < actions.size(); i++){
             super.addAction(actions.get(i));
         }
-    }
+    }*/
 
     @Override
     public ArrayList<Md2Action> getActions() {
