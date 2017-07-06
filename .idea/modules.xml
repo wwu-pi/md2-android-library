@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/md2-android-library.iml" filepath="$PROJECT_DIR$/md2-android-library.iml" />
-      <module fileurl="file://$PROJECT_DIR$/md2Library/md2Library.iml" filepath="$PROJECT_DIR$/md2Library/md2Library.iml" />
     </modules>
   </component>
 </project>
