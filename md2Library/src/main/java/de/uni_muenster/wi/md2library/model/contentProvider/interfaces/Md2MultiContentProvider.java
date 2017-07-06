@@ -23,5 +23,11 @@ public void setCurrentIndex(int i);
  public  Md2Type getValue(int entityIndex, String attribute);
  public  void setValue(int entityIndex, String name, Md2Type value);
 
+//TODO: Merge
+ //public int getCurrentIndex();
+ //public void setCurrentIndex(int i);
+
+ //public ArrayList<Md2Entity> getContentsList();
+
 
 }

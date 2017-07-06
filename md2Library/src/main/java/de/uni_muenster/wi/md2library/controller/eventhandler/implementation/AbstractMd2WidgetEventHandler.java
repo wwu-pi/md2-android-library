@@ -14,7 +14,8 @@ import de.uni_muenster.wi.md2library.controller.eventhandler.interfaces.Md2Widge
  * @version 1.0
  * @since 1.0
  */
-public abstract class AbstractMd2WidgetEventHandler extends AbstractMd2EventHandler implements Md2WidgetEventHandler {
+public abstract class
+AbstractMd2WidgetEventHandler extends AbstractMd2EventHandler implements Md2WidgetEventHandler {
 
     /**
      * Instantiates a new Abstract md 2 widget event handler.
@@ -48,8 +49,15 @@ public abstract class AbstractMd2WidgetEventHandler extends AbstractMd2EventHand
         super.removeAction(action);
     }
 
+    public void addActions(ArrayList<Md2Action> actions){
+        for(int i = 0; i < actions.size(); i++){
+            super.addAction(actions.get(i));
+        }
+    }
+
     @Override
     public ArrayList<Md2Action> getActions() {
         return super.getActions();
     }
+
 }
