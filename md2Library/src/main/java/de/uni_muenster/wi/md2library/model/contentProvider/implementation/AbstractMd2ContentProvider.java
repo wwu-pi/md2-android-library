@@ -219,4 +219,8 @@ public abstract class AbstractMd2ContentProvider implements Md2ContentProvider {
         md2DataStore.remove(internalId, content);
         internalId = -1;
     }
+
+    public void newEntity(){
+        //konkrete Implementierung im Generator
+    }
 }

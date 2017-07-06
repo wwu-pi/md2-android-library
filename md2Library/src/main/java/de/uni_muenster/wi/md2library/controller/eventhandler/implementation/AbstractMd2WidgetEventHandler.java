@@ -32,6 +32,12 @@ public abstract class AbstractMd2WidgetEventHandler extends AbstractMd2EventHand
         super(actions);
     }
 
+    public void addActions(ArrayList<Md2Action> actions){
+        for(int i = 0; i < actions.size(); i++){
+            super.addAction(actions.get(i));
+        }
+    }
+
     @Override
     public void registerAction(Md2Action action) {
         super.addAction(action);
@@ -40,5 +46,10 @@ public abstract class AbstractMd2WidgetEventHandler extends AbstractMd2EventHand
     @Override
     public void unregisterAction(Md2Action action) {
         super.removeAction(action);
+    }
+
+    @Override
+    public ArrayList<Md2Action> getActions() {
+        return super.getActions();
     }
 }
