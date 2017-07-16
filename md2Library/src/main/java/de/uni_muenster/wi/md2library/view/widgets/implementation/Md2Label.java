@@ -130,7 +130,7 @@ public class Md2Label extends TextView implements Md2Content {
             return;
         }
 
-        if (!this.getText().equals(value.toString())) {
+        if (!(this.getText() ==(value.toString()))) {
             super.setText(value.toString());
         }
     }

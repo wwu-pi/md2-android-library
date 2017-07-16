@@ -1,5 +1,6 @@
 package de.uni_muenster.wi.md2library.controller.action.implementation;
 
+import de.uni_muenster.wi.md2library.model.contentProvider.implementation.AbstractMd2ContentProvider;
 import de.uni_muenster.wi.md2library.model.contentProvider.implementation.AbstractMd2MultiContentProvider;
 import de.uni_muenster.wi.md2library.model.contentProvider.implementation.Md2ContentProviderRegistry;
 import de.uni_muenster.wi.md2library.model.contentProvider.interfaces.Md2ContentProvider;
@@ -23,8 +24,9 @@ public class Md2ContentProviderGetActiveAction extends AbstractMd2Action{
 
     public void execute(){
         AbstractMd2MultiContentProvider scp = (AbstractMd2MultiContentProvider) Md2ContentProviderRegistry.getInstance().getContentMultiProvider(source);
-        Md2ContentProvider tcp = Md2ContentProviderRegistry.getInstance().getContentProvider(target);
+        AbstractMd2ContentProvider tcp = (AbstractMd2ContentProvider) Md2ContentProviderRegistry.getInstance().getContentProvider(target);
         tcp.setContent(scp.getContentsList().get(scp.getCurrentIndex()));
+        tcp.notfiyOnChangeHandlers();
     }
 
 }
