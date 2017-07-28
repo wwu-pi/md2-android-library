@@ -24,7 +24,7 @@ import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Type;
  * @since 1.0
  */
 public abstract class AbstractMd2ContentProvider implements Md2ContentProvider {
-    private Filter filter;
+    protected Filter filter;
     /**
      * The Key.
      */

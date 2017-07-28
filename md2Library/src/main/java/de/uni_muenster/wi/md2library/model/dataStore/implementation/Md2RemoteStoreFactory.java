@@ -12,8 +12,15 @@ import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Entity;
 public class Md2RemoteStoreFactory extends AbstractMd2DataStoreFactory implements Md2RemoteDataStoreFactory {
 
 
-    public Md2DataStore getDataStore(URL uri, Md2Entity entity) {
-        return new Md2RemoteStore<>( uri, entity.getClass() );
+    public Md2DataStore getDataStore(String uri, Md2Entity entity) {
+        try{
+            URL url = new URL(uri.replaceFirst("/$",""));
+            return new Md2RemoteStore<>( url, entity.getClass() );
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     @Override
