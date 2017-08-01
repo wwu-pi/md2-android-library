@@ -23,7 +23,7 @@ import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Type;
  * @version 1.0
  * @since 1.0
  */
-public class Md2SQLiteDataStore  implements Md2LocalStore,Md2DataStore {
+public class Md2SQLiteDataStore extends AbstractMd2DataStore implements Md2LocalStore,Md2DataStore {
 
     /**
      * The Sq lite helper.

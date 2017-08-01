@@ -74,6 +74,7 @@ public class Md2RemoteStore<T extends Md2Entity> extends AbstractMd2DataStore {
                             }
                             //Md2Entity md2Object = (Md2Entity) new Gson().fromJson(response.toString(),dataType);
                             System.out.println(mD2List.toString());
+                            contentProvider.overwriteContent((List<Md2Entity>) mD2List);
                         }
 
                     }

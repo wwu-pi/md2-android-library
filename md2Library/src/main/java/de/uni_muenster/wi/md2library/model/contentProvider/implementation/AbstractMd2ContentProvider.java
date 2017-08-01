@@ -118,6 +118,7 @@ public abstract class AbstractMd2ContentProvider implements Md2ContentProvider {
         if ((content != null)&&(content.isEmpty()==false)) {
             this.content = content.get(0);
         }
+        callAllHandlers();
     }
     private void callAllHandlers(){
         for (String key: this.attributeChangedEventHandlers.keySet()){

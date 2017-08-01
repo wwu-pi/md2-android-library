@@ -1,5 +1,6 @@
 package de.uni_muenster.wi.md2library.model.dataStore.interfaces;
 
+import de.uni_muenster.wi.md2library.model.contentProvider.interfaces.Md2ContentProvider;
 import de.uni_muenster.wi.md2library.model.dataStore.Filter;
 import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Entity;
 
@@ -13,6 +14,10 @@ import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Entity;
  * @since 1.0
  */
 public interface Md2DataStore<T extends Md2Entity> {
+    public Md2ContentProvider getContentProvider();
+
+
+    public void setContentProvider(Md2ContentProvider contentProvider) ;
 
     /**
      * Execute query in data store.
