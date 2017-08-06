@@ -56,10 +56,10 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
 
     }
 
-//TODO Merge
-//public void remove(int i){
-//	((ArrayList<Md2Entity>)entities).remove(i);
-//}
+    //TODO Merge
+    //public void remove(int i){
+    //	((ArrayList<Md2Entity>)entities).remove(i);
+    //}
 
     public void removeAll() {
         this.entities.clear();
