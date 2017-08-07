@@ -8,12 +8,23 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.net.URL;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,14 +73,19 @@ public class Md2RemoteStore<T extends Md2Entity> extends AbstractMd2DataStore {
                         if (null == response.toString()) {
                             //return null;
                         }else {
-                            Gson gson = new Gson();
+
+
+
+
+                            // Register an adapter to manage the date types as long values
+                            Gson gson = new GsonBuilder().registerTypeAdapter(Timestamp.class,new MyDateTypeAdapter()).create();
                             System.out.println(response.toString());
                             List<T> mD2List = new ArrayList<T>();
                             for (int i = 0; i < response.length(); i++) {
                                 try{
                                 mD2List.add(i,gson.fromJson(response.getString(i), typeParameterClass));
                                 }catch (Exception e){
-
+e.printStackTrace();
                                 }
                             }
                             //Md2Entity md2Object = (Md2Entity) new Gson().fromJson(response.toString(),dataType);
@@ -93,6 +109,27 @@ public class Md2RemoteStore<T extends Md2Entity> extends AbstractMd2DataStore {
         VolleyQueue.getInstance(null).getRequestQueue().add(arrayRequest);
 
     }
+
+    private class MyDateTypeAdapter extends TypeAdapter<Timestamp> {
+        @Override
+        public void write(JsonWriter out, Timestamp value) throws IOException {
+            if (value == null)
+                out.nullValue();
+            else
+                out.value(value.getTime() / 1000);
+        }
+
+        @Override
+        public Timestamp read(JsonReader in) throws IOException {
+            if (in != null)
+                return new Timestamp(in.nextLong() / 1000);
+            else
+                return null;
+        }
+    }
+
+
+
     /**
      * Try to get internal id. I.e., look for entity in database that has the same values as the entity.
      *

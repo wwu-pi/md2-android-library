@@ -66,12 +66,12 @@ public interface Md2Entity extends Md2Type {
      *
      * @param timestamp the current timestamp
      */
-    void setTimestamp(Timestamp timestamp);
+    void setModifiedDate(Timestamp timestamp);
 
     /**
      * Get the entity timestamp
      *
      * @return the timestamp
      */
-    Timestamp getTimestamp();
+    Timestamp getModifiedDate();
 }

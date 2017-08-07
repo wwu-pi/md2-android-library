@@ -1,5 +1,7 @@
 package de.uni_muenster.wi.md2library.model.dataStore.interfaces;
 
+import java.sql.Timestamp;
+
 import de.uni_muenster.wi.md2library.model.contentProvider.interfaces.Md2ContentProvider;
 import de.uni_muenster.wi.md2library.model.dataStore.Filter;
 import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Entity;
@@ -26,6 +28,8 @@ public interface Md2DataStore<T extends Md2Entity> {
      * @return the md 2 entity
      */
     void query(Filter filter);
+
+    void query(Filter filter, Timestamp modifiedDate);
 
     /**
      * Try to get internal id. I.e., look for entity in database that has the same values as the entity.

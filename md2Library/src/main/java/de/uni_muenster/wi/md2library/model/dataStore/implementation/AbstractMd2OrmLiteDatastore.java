@@ -3,6 +3,7 @@ package de.uni_muenster.wi.md2library.model.dataStore.implementation;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Entity;
  */
 
 
-public abstract class AbstractMd2OrmLiteDatastore<T extends  Md2Entity> implements Md2LocalStore<T> {
+public abstract class AbstractMd2OrmLiteDatastore<T extends  Md2Entity> extends  AbstractMd2DataStore<T> implements Md2LocalStore<T> {
 
 
     Dao<T , Integer> myDao;
@@ -36,6 +37,9 @@ public abstract class AbstractMd2OrmLiteDatastore<T extends  Md2Entity> implemen
     public void query(Filter filter) {
 
     }
+
+
+
 
 @Override
     public  void getInternalId(Md2Entity entity) {

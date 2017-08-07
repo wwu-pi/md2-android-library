@@ -78,6 +78,7 @@ public abstract class AbstractMd2ContentProvider implements Md2ContentProvider {
         attributeChangedEventHandlers = new HashMap<>();
         //observedAttributes = new HashMap<>();
         this.md2DataStore = md2DataStore;
+        md2DataStore.setContentProvider(this);
         this.existsInDataStore = false;
         internalId = -1;
         this.load();
@@ -133,9 +134,9 @@ public abstract class AbstractMd2ContentProvider implements Md2ContentProvider {
         if ((updates != null)&&(updates.isEmpty() == false)) {
 
             for (Md2Entity entity1 : updates) {
-                Timestamp updateTimestamp = entity1.getTimestamp();
+                Timestamp updateTimestamp = entity1.getModifiedDate();
 
-                if(updateTimestamp.after(content.getTimestamp())){
+                if(updateTimestamp.after(content.getModifiedDate())){
                     this.content = entity1;
                 }
             }
@@ -145,7 +146,7 @@ public abstract class AbstractMd2ContentProvider implements Md2ContentProvider {
 
             for(Md2Entity entity2 : deleted) {
 
-                Timestamp contentTimestamp = entity2.getTimestamp();
+                Timestamp contentTimestamp = entity2.getModifiedDate();
 
                 if (contentTimestamp.after(syncTimestamp)) {
                     this.content = null;
@@ -268,7 +269,7 @@ public abstract class AbstractMd2ContentProvider implements Md2ContentProvider {
         Timestamp oldStamp = syncTimestamp;
         this.syncTimestamp = new Timestamp(System.currentTimeMillis());
 
-//        md2DataStore.query(this.filter, oldStamp);
+        md2DataStore.query(this.filter, oldStamp);
 
     }
     @Override
