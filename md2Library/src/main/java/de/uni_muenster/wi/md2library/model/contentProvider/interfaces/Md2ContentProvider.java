@@ -94,4 +94,9 @@ public interface Md2ContentProvider extends IContentProvider {
      * Remove.
      */
     void remove();
+
+    /**
+     * Update.
+     */
+    void update();
 }
