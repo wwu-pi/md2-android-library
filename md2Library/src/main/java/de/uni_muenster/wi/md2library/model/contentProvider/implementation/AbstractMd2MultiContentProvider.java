@@ -2,6 +2,7 @@ package de.uni_muenster.wi.md2library.model.contentProvider.implementation;
 
 import android.support.v7.widget.RecyclerView;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -18,10 +19,11 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
 
 
     private Collection<Md2Entity> entities;
-
+    protected Timestamp syncTimestamp;
     private String key;
     private Md2DataStore dataStore;
     private int currentIndex;
+    protected Filter filter;
     private HashMap<String, RecyclerView.Adapter> adapters = new HashMap<String, RecyclerView.Adapter>();
 
     public void addAdapter(RecyclerView.Adapter adapter, String key){
@@ -124,14 +126,17 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
     }
 
     public void load() {
-
+        dataStore.query(this.filter);
     }
+
 
     public void load(Filter condition) {
-
+            dataStore.query(condition);
     }
 
+
     public void remove() {
+        dataStore.remove(((Md2Entity)((ArrayList)this.entities).get(currentIndex)).getId(),((ArrayList)this.entities).get(currentIndex).getClass() );
     }
 
     public void remove(int i) {
@@ -147,5 +152,56 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
 
     public abstract void setValue(int entityIndex, String name, Md2Type value);
 
+
+    @Override
+    public void overwriteContent(List<Md2Entity> content){
+        if ((content != null)&&(content.isEmpty()==false)) {
+            this.entities = new ArrayList<>(content);
+        }
+       notifyAllAdapters();
+    }
+
+
+    public void updateContent(List<Md2Entity> updates, List<Md2Entity> deleted) {
+
+        if ((updates != null)&&(updates.isEmpty() == false)) {
+
+            for (Md2Entity entityUpdate : updates) {
+                for(Md2Entity entityConent: entities){
+                    if(entityUpdate.equals(entityConent) &&entityUpdate.getModifiedDate().after(entityConent.getModifiedDate()))  {
+                        entityConent=entityUpdate;
+                    }
+                }
+
+            }
+        }
+
+        if ((deleted != null) && (deleted.isEmpty() == false)) {
+
+            for(Md2Entity entityDeleted : deleted) {
+                for(Md2Entity entityContent: entities){
+                    if(entityDeleted.equals(entityContent) &&entityDeleted.getModifiedDate().after(syncTimestamp))  {
+                        this.entities.remove(entityContent);
+                    }
+                }
+
+            }
+        }
+        notifyAllAdapters();
+    }
+
+
+    @Override
+    public void update(){
+        Timestamp oldStamp = syncTimestamp;
+        this.syncTimestamp = new Timestamp(System.currentTimeMillis());
+
+        dataStore.query(this.filter, oldStamp);
+    }
+
+
 }
+
+
+
 
