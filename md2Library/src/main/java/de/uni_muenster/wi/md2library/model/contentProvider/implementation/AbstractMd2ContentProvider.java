@@ -129,7 +129,7 @@ public abstract class AbstractMd2ContentProvider implements Md2ContentProvider {
         callAllHandlers();
     }
 
-    public void updateContent(List<Md2Entity> updates, List<Md2Entity> deleted) {
+    public void updateContent(List<Md2Entity> updates) {
 
         if ((updates != null)&&(updates.isEmpty() == false)) {
 
@@ -142,6 +142,9 @@ public abstract class AbstractMd2ContentProvider implements Md2ContentProvider {
             }
         }
 
+
+    }
+    public void purgeContent(List<Md2Entity> deleted){
         if ((deleted != null) && (deleted.isEmpty() == false)) {
 
             for(Md2Entity entity2 : deleted) {

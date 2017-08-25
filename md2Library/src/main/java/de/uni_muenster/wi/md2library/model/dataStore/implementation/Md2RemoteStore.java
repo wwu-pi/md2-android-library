@@ -9,10 +9,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
@@ -23,12 +19,15 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.uni_muenster.wi.md2library.model.dataStore.AtomicExpression;
+import de.uni_muenster.wi.md2library.model.dataStore.CombinedExpression;
 import de.uni_muenster.wi.md2library.model.dataStore.Filter;
+import de.uni_muenster.wi.md2library.model.dataStore.Junction;
+import de.uni_muenster.wi.md2library.model.dataStore.Operator;
 import de.uni_muenster.wi.md2library.model.dataStore.SqlUtils;
 import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Entity;
 
@@ -39,6 +38,7 @@ import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Entity;
 public class Md2RemoteStore<T extends Md2Entity> extends AbstractMd2DataStore {
     private URL baseURL;
     final Class<T> typeParameterClass;
+    private Gson gson;
 
 
 
@@ -46,6 +46,7 @@ public class Md2RemoteStore<T extends Md2Entity> extends AbstractMd2DataStore {
     public Md2RemoteStore(URL uRL,Class<T> typeParameterClass){
         this.baseURL=uRL;
         this.typeParameterClass = typeParameterClass;
+        this.gson = new GsonBuilder().registerTypeAdapter(Timestamp.class,new MyDateTypeAdapter()).create();
 
     }
 
@@ -78,14 +79,14 @@ public class Md2RemoteStore<T extends Md2Entity> extends AbstractMd2DataStore {
 
 
                             // Register an adapter to manage the date types as long values
-                            Gson gson = new GsonBuilder().registerTypeAdapter(Timestamp.class,new MyDateTypeAdapter()).create();
+
                             System.out.println(response.toString());
                             List<T> mD2List = new ArrayList<T>();
                             for (int i = 0; i < response.length(); i++) {
                                 try{
                                 mD2List.add(i,gson.fromJson(response.getString(i), typeParameterClass));
                                 }catch (Exception e){
-e.printStackTrace();
+                                    e.printStackTrace();
                                 }
                             }
                             //Md2Entity md2Object = (Md2Entity) new Gson().fromJson(response.toString(),dataType);
@@ -109,6 +110,124 @@ e.printStackTrace();
         VolleyQueue.getInstance(null).getRequestQueue().add(arrayRequest);
 
     }
+    @Override
+    public void query(Filter filter, Timestamp modifiedDate){
+        AtomicExpression atomicExpression;
+        if (modifiedDate!= null){
+            atomicExpression=   new AtomicExpression("MODIFIED_TIMESTAMP", Operator.GREATER, "'"+modifiedDate.toString()+"'");
+        }else {
+            query(filter);
+            return;
+        }
+        if(filter!=null){
+            filter.setFilterTree( new CombinedExpression(filter.getFilterTree(), Junction.AND,atomicExpression ));
+        }
+        else{
+            filter = new Filter(atomicExpression);
+        }
+        String url = baseURL+"/"+typeParameterClass.getSimpleName().toLowerCase()+"?filter="+ SqlUtils.filterToSqlStatement(filter);
+        //String url = "http://watchapp.uni-muenster.de:8080/citizenApp.backend/service/address/1";
+        System.out.println("DO Query Active Changes:");
+        System.out.println(url);
+// Request a string response
+        JSONArray jsonArray = new JSONArray();
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET,url,jsonArray,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                        // Result handling
+                        System.out.println("Returned LOAD:"+response.toString());
+                        if (null == response.toString()) {
+                            //return null;
+                        }else {
+
+
+
+
+                            // Register an adapter to manage the date types as long values
+
+                            System.out.println(response.toString());
+                            List<T> mD2List = new ArrayList<T>();
+                            for (int i = 0; i < response.length(); i++) {
+                                try{
+                                    mD2List.add(i,gson.fromJson(response.getString(i), typeParameterClass));
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                            }
+                            //Md2Entity md2Object = (Md2Entity) new Gson().fromJson(response.toString(),dataType);
+                            System.out.println(mD2List.toString());
+                            contentProvider.updateContent((List<Md2Entity>) mD2List);
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                // Error handling
+                System.out.println("Something went wrong!");
+                System.out.println(error.getMessage());
+                error.printStackTrace();
+
+            }
+
+        });
+        VolleyQueue.getInstance(null).getRequestQueue().add(arrayRequest);
+        url = baseURL+"/"+typeParameterClass.getSimpleName().toLowerCase()+"?filter="+ SqlUtils.filterToSqlStatement(filter)+"?deleted=true";
+        //String url = "http://watchapp.uni-muenster.de:8080/citizenApp.backend/service/address/1";
+        System.out.println("DO Query deleted Changes:");
+        System.out.println(url);
+// Request a string response
+        jsonArray = new JSONArray();
+        arrayRequest = new JsonArrayRequest(Request.Method.GET,url,jsonArray,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                        // Result handling
+                        System.out.println("Returned LOAD:"+response.toString());
+                        if (null == response.toString()) {
+                            //return null;
+                        }else {
+
+
+
+
+                            // Register an adapter to manage the date types as long values
+
+                            System.out.println(response.toString());
+                            List<T> mD2List = new ArrayList<T>();
+                            for (int i = 0; i < response.length(); i++) {
+                                try{
+                                    mD2List.add(i,gson.fromJson(response.getString(i), typeParameterClass));
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                            }
+                            //Md2Entity md2Object = (Md2Entity) new Gson().fromJson(response.toString(),dataType);
+                            System.out.println(mD2List.toString());
+                            contentProvider.purgeContent((List<Md2Entity>) mD2List);
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                // Error handling
+                System.out.println("Something went wrong!");
+                System.out.println(error.getMessage());
+                error.printStackTrace();
+
+            }
+
+        });
+        VolleyQueue.getInstance(null).getRequestQueue().add(arrayRequest);
+
+    }
+
 
     private class MyDateTypeAdapter extends TypeAdapter<Timestamp> {
         @Override

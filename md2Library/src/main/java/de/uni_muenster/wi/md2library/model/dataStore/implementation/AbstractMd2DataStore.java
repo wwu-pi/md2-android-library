@@ -34,7 +34,7 @@ public abstract class AbstractMd2DataStore<T extends Md2Entity> implements Md2Da
 
         public void query(Filter filter, Timestamp modifiedDate){
                 if(modifiedDate!=null){
-        AtomicExpression atomicExpression=   new AtomicExpression("MODIFIED_TIMESTAMP", Operator.GREATER, "'"+modifiedDate.toString()+"'");
+                    AtomicExpression atomicExpression=   new AtomicExpression("MODIFIED_TIMESTAMP", Operator.GREATER, "'"+modifiedDate.toString()+"'");
 
                 if(filter!=null){
                  filter.setFilterTree( new CombinedExpression(filter.getFilterTree(), Junction.AND,atomicExpression ));
