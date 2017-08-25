@@ -97,8 +97,7 @@ public interface Md2ContentProvider extends IContentProvider {
      */
     void remove();
 
-    public void updateContent(List<Md2Entity> updates);
-    public void purgeContent(List<Md2Entity> updates);
+
 
     /**
      * Update.

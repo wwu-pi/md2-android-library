@@ -113,6 +113,7 @@ public class Md2RemoteStore<T extends Md2Entity> extends AbstractMd2DataStore {
     @Override
     public void query(Filter filter, Timestamp modifiedDate){
         AtomicExpression atomicExpression;
+        Filter myFilter;
         if (modifiedDate!= null){
             atomicExpression=   new AtomicExpression("MODIFIED_TIMESTAMP", Operator.GREATER, "'"+modifiedDate.toString()+"'");
         }else {
@@ -120,12 +121,12 @@ public class Md2RemoteStore<T extends Md2Entity> extends AbstractMd2DataStore {
             return;
         }
         if(filter!=null){
-            filter.setFilterTree( new CombinedExpression(filter.getFilterTree(), Junction.AND,atomicExpression ));
+            myFilter = new Filter( new CombinedExpression(filter.getFilterTree(), Junction.AND,atomicExpression ));
         }
         else{
-            filter = new Filter(atomicExpression);
+            myFilter = new Filter(atomicExpression);
         }
-        String url = baseURL+"/"+typeParameterClass.getSimpleName().toLowerCase()+"?filter="+ SqlUtils.filterToSqlStatement(filter);
+        String url = baseURL+"/"+typeParameterClass.getSimpleName().toLowerCase()+"?filter="+ SqlUtils.filterToSqlStatement(myFilter);
         //String url = "http://watchapp.uni-muenster.de:8080/citizenApp.backend/service/address/1";
         System.out.println("DO Query Active Changes:");
         System.out.println(url);
@@ -175,7 +176,7 @@ public class Md2RemoteStore<T extends Md2Entity> extends AbstractMd2DataStore {
 
         });
         VolleyQueue.getInstance(null).getRequestQueue().add(arrayRequest);
-        url = baseURL+"/"+typeParameterClass.getSimpleName().toLowerCase()+"?filter="+ SqlUtils.filterToSqlStatement(filter)+"?deleted=true";
+        url = baseURL+"/"+typeParameterClass.getSimpleName().toLowerCase()+"?filter="+ SqlUtils.filterToSqlStatement(myFilter)+"&?deleted=true";
         //String url = "http://watchapp.uni-muenster.de:8080/citizenApp.backend/service/address/1";
         System.out.println("DO Query deleted Changes:");
         System.out.println(url);

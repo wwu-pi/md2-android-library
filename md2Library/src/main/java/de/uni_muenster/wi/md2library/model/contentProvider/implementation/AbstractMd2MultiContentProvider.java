@@ -6,7 +6,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import de.uni_muenster.wi.md2library.model.contentProvider.interfaces.Md2MultiContentProvider;
@@ -62,6 +61,7 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
         this.entities = new ArrayList<Md2Entity>();
         this.key = key;
         this.dataStore = store;
+        store.setContentProvider(this);
         currentIndex = 0;
     }
 
@@ -161,8 +161,8 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
        notifyAllAdapters();
     }
 
-
-    public void updateContent(List<Md2Entity> updates, List<Md2Entity> deleted) {
+    @Override
+    public void updateContent(List<Md2Entity> updates) {
 
         if ((updates != null)&&(updates.isEmpty() == false)) {
 
@@ -174,8 +174,12 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
                 }
 
             }
+            notifyAllAdapters();
         }
+    }
 
+    @Override
+    public void purgeContent(List<Md2Entity> deleted){
         if ((deleted != null) && (deleted.isEmpty() == false)) {
 
             for(Md2Entity entityDeleted : deleted) {
@@ -186,10 +190,9 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
                 }
 
             }
+            notifyAllAdapters();
         }
-        notifyAllAdapters();
     }
-
 
     @Override
     public void update(){

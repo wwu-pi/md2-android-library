@@ -1,6 +1,7 @@
 package de.uni_muenster.wi.md2library.model.dataStore.implementation;
         import java.sql.Timestamp;
 
+        import de.uni_muenster.wi.md2library.model.contentProvider.interfaces.IContentProvider;
         import de.uni_muenster.wi.md2library.model.contentProvider.interfaces.Md2ContentProvider;
         import de.uni_muenster.wi.md2library.model.dataStore.AtomicExpression;
         import de.uni_muenster.wi.md2library.model.dataStore.CombinedExpression;
@@ -21,13 +22,13 @@ package de.uni_muenster.wi.md2library.model.dataStore.implementation;
  * @since 1.0
  */
 public abstract class AbstractMd2DataStore<T extends Md2Entity> implements Md2DataStore<T> {
-        protected Md2ContentProvider contentProvider;
+        protected IContentProvider contentProvider;
 
-        public Md2ContentProvider getContentProvider() {
+        public IContentProvider getContentProvider() {
                 return contentProvider;
         }
 
-        public void setContentProvider(Md2ContentProvider contentProvider) {
+        public void setContentProvider(IContentProvider contentProvider) {
                 this.contentProvider = contentProvider;
         }
 

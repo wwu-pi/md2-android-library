@@ -3,11 +3,9 @@ package de.uni_muenster.wi.md2library.model.dataStore.implementation;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.uni_muenster.wi.md2library.model.contentProvider.interfaces.Md2ContentProvider;
 import de.uni_muenster.wi.md2library.model.dataStore.Filter;
 import de.uni_muenster.wi.md2library.model.dataStore.interfaces.Md2LocalStore;
 import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Entity;
@@ -21,17 +19,7 @@ public abstract class AbstractMd2OrmLiteDatastore<T extends  Md2Entity> extends 
 
 
     Dao<T , Integer> myDao;
-    protected Md2ContentProvider contentProvider;
 
-    @Override
-    public void setContentProvider(Md2ContentProvider contentProvider) {
-        this.contentProvider = contentProvider;
-    }
-
-    @Override
-    public Md2ContentProvider getContentProvider(){
-        return this.contentProvider;
-    }
 
     @Override
     public void query(Filter filter) {
