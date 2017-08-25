@@ -1,7 +1,11 @@
 package de.uni_muenster.wi.md2library.model.contentProvider.implementation;
 
+import android.support.v7.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import de.uni_muenster.wi.md2library.model.contentProvider.interfaces.Md2MultiContentProvider;
@@ -18,7 +22,23 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
     private String key;
     private Md2DataStore dataStore;
     private int currentIndex;
+    private HashMap<String, RecyclerView.Adapter> adapters = new HashMap<String, RecyclerView.Adapter>();
 
+    public void addAdapter(RecyclerView.Adapter adapter, String key){
+        if(!adapters.containsKey(key)){
+            adapters.put(key, adapter);
+        } else {
+            adapters.remove(key);
+            adapters.put(key, adapter);
+        }
+    }
+
+    public void notifyAllAdapters(){
+        Collection<RecyclerView.Adapter> col = adapters.values();
+        for (RecyclerView.Adapter rec : col) {
+            rec.notifyDataSetChanged();
+        }
+    }
 
     public void setCurrentIndex(int i) {
         this.currentIndex = i;
@@ -45,11 +65,13 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
 
     public void add(Md2Entity entity) {
         entities.add(entity);
+        notifyAllAdapters();
     }
 
 
     public void addAll(List<Md2Entity> list) {
         entities.addAll(list);
+        notifyAllAdapters();
     }
 
     public void remove(Filter conditions) {
@@ -114,6 +136,7 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
 
     public void remove(int i) {
         ((ArrayList<Md2Entity>) entities).remove(i);
+        notifyAllAdapters();
     }
 
     public Md2Type getValue(int entityIndex, String attribute) {
