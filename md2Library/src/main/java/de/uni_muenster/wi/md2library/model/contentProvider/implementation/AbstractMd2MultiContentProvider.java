@@ -116,7 +116,11 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
 
     public void save() {
         for (Md2Entity entity : entities) {
-            this.dataStore.put(entity);
+            if (entity.getId()>0) {
+                this.dataStore.put(entity.getId(), entity);
+            }else {
+                this.dataStore.put(entity);
+            }
         }
     }
 
@@ -172,12 +176,21 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
         if ((updates != null)&&(updates.isEmpty() == false)) {
 
             for (Md2Entity entityUpdate : updates) {
-                for(Md2Entity entityConent: entities){
-                    if(entityUpdate.equals(entityConent) &&entityUpdate.getModifiedDate().after(entityConent.getModifiedDate()))  {
-                        entityConent=entityUpdate;
+                boolean found = false;
+                for(int i =0;i<entities.size();i++){
+                    if(((ArrayList<Md2Entity>) entities).get(i).getId()==0){
+                        if(entityUpdate.equals(((ArrayList<Md2Entity>) entities).get(i)) &&entityUpdate.getModifiedDate().after(((ArrayList<Md2Entity>) entities).get(i).getModifiedDate())){
+                            ((ArrayList<Md2Entity>) entities).set(i,entityUpdate);
+                            found=true;
+                        }
+                    }else{
+                        if (((ArrayList<Md2Entity>) entities).get(i).getId()==entityUpdate.getId()){
+                            ((ArrayList<Md2Entity>) entities).set(i,entityUpdate);
+                            found=true;
+                        }
                     }
                 }
-
+                if (!found)this.add(entityUpdate);
             }
             notifyAllAdapters();
         }
@@ -188,9 +201,9 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
         if ((deleted != null) && (deleted.isEmpty() == false)) {
 
             for(Md2Entity entityDeleted : deleted) {
-                for(Md2Entity entityContent: entities){
-                    if(entityDeleted.equals(entityContent) &&entityDeleted.getModifiedDate().after(syncTimestamp))  {
-                        this.entities.remove(entityContent);
+                for(int i =0;i<entities.size();i++){
+                    if((entityDeleted.equals(((ArrayList<Md2Entity>) entities).get(i)) &&entityDeleted.getModifiedDate().after(syncTimestamp))||(((ArrayList<Md2Entity>) entities).get(i).getId()==entityDeleted.getId()))  {
+                        ((ArrayList<Md2Entity>) entities).remove(i);
                     }
                 }
 
@@ -210,6 +223,7 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
         else {
             dataStore.query(this.filter, oldStamp);
         }
+
     }
 
     public void reset(){
