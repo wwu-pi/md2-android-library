@@ -204,7 +204,12 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
         Timestamp oldStamp = syncTimestamp;
         this.syncTimestamp = new Timestamp(System.currentTimeMillis());
 
-        dataStore.query(this.filter, oldStamp);
+        if(this.filter == null){
+            System.out.println("Filter null???");
+        }
+        else {
+            dataStore.query(this.filter, oldStamp);
+        }
     }
 
     public void reset(){
