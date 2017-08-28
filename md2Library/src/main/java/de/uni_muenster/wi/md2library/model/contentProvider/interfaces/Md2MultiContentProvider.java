@@ -27,6 +27,8 @@ public void setCurrentIndex(int i);
 
  public  Md2Type getValue(int entityIndex, String attribute);
  public  void setValue(int entityIndex, String name, Md2Type value);
+ public void setValueForAll(String name, Md2Type value);
+public void reset();
 
 //TODO: Merge
  //public int getCurrentIndex();

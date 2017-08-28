@@ -206,19 +206,7 @@ public abstract class AbstractMd2ContentProvider implements Md2ContentProvider {
 
     @Override
     public void reset() {
-        if (content == null)
-            return;
-
-        Set<String> keys = this.content.getAttributes().keySet();
-
-        for (String key : keys) {
-            Md2Type oldValue = this.backup.get(key);
-            if (oldValue == null) {
-                this.content.getAttributes().remove(key);
-            } else {
-                this.setValue(key, oldValue);
-            }
-        }
+        newEntity();
     }
 
     @Override
