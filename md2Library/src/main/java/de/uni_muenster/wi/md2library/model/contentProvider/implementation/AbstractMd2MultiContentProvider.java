@@ -156,6 +156,11 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
 
     public abstract void setValue(int entityIndex, String name, Md2Type value);
 
+    public void setValueForAll(String name, Md2Type value){
+        for(int i = 0; i < entities.size(); i++){
+            setValue(i, name, value);
+        }
+    }
 
     @Override
     public void overwriteContent(List<Md2Entity> content){
@@ -211,9 +216,19 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
     public void update(){
         Timestamp oldStamp = syncTimestamp;
         this.syncTimestamp = new Timestamp(System.currentTimeMillis());
-        dataStore.query(this.filter, oldStamp);
+
+        if(this.filter == null){
+            System.out.println("Filter null???");
+        }
+        else {
+            dataStore.query(this.filter, oldStamp);
+        }
+
     }
 
+    public void reset(){
+        removeAll();
+    }
 
 }
 

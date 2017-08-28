@@ -32,6 +32,7 @@ public interface IContentProvider {
 
     public void purgeContent(List<Md2Entity> updates);
 
+    void reset();
 
 
 
