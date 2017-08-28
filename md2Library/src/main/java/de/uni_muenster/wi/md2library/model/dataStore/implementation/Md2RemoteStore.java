@@ -48,7 +48,8 @@ public class Md2RemoteStore<T extends Md2Entity> extends AbstractMd2DataStore {
     public Md2RemoteStore(URL uRL,Class<T> typeParameterClass){
         this.baseURL=uRL;
         this.typeParameterClass = typeParameterClass;
-        this.gson = new GsonBuilder().registerTypeAdapter(Timestamp.class,new MyDateTypeAdapter()).create();
+        this.gson = new GsonBuilder().registerTypeAdapter(Timestamp.class,new MyDateTypeAdapter()).excludeFieldsWithoutExposeAnnotation().create();
+
         this.simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
@@ -332,9 +333,9 @@ public class Md2RemoteStore<T extends Md2Entity> extends AbstractMd2DataStore {
         System.out.println("DO PUT");
         List<Md2Entity> list = new ArrayList<Md2Entity>();
         list.add(0,md2Entity);
-        String json = new Gson().toJson(md2Entity);
-        System.out.println(json);
-        json = new Gson().toJson(list);
+        //String json = gson.toJson(md2Entity);
+        //System.out.println(json);
+        String json =  gson.toJson(list);
         System.out.println(json);
 // Request a string response
         JSONObject jsonObject = new JSONObject();
