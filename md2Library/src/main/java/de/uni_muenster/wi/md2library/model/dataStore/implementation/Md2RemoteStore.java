@@ -20,8 +20,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 import de.uni_muenster.wi.md2library.model.dataStore.AtomicExpression;
 import de.uni_muenster.wi.md2library.model.dataStore.CombinedExpression;
@@ -39,7 +41,7 @@ public class Md2RemoteStore<T extends Md2Entity> extends AbstractMd2DataStore {
     private URL baseURL;
     final Class<T> typeParameterClass;
     private Gson gson;
-
+    private SimpleDateFormat simpleDateFormat;
 
 
 
@@ -47,7 +49,8 @@ public class Md2RemoteStore<T extends Md2Entity> extends AbstractMd2DataStore {
         this.baseURL=uRL;
         this.typeParameterClass = typeParameterClass;
         this.gson = new GsonBuilder().registerTypeAdapter(Timestamp.class,new MyDateTypeAdapter()).create();
-
+        this.simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        this.simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
     /**
@@ -115,8 +118,9 @@ public class Md2RemoteStore<T extends Md2Entity> extends AbstractMd2DataStore {
         AtomicExpression atomicExpression;
         Filter myFilter;
         if (modifiedDate!= null){
-            atomicExpression=   new AtomicExpression("MODIFIED_TIMESTAMP", Operator.GREATER, "'"+modifiedDate.toString()+"'");
+            atomicExpression=   new AtomicExpression("MODIFIED_TIMESTAMP", Operator.GREATER, "'"+simpleDateFormat.format(modifiedDate)+"'");
         }else {
+            if (filter==null) filter=new Filter();
             query(filter);
             return;
         }
@@ -176,7 +180,7 @@ public class Md2RemoteStore<T extends Md2Entity> extends AbstractMd2DataStore {
 
         });
         VolleyQueue.getInstance(null).getRequestQueue().add(arrayRequest);
-        url = baseURL+"/"+typeParameterClass.getSimpleName().toLowerCase()+"?filter="+ SqlUtils.filterToSqlStatement(myFilter)+"&?deleted=true";
+        url = baseURL+"/"+typeParameterClass.getSimpleName().toLowerCase()+"?filter="+ SqlUtils.filterToSqlStatement(myFilter)+"&deleted=true";
         //String url = "http://watchapp.uni-muenster.de:8080/citizenApp.backend/service/address/1";
         System.out.println("DO Query deleted Changes:");
         System.out.println(url);
@@ -236,13 +240,13 @@ public class Md2RemoteStore<T extends Md2Entity> extends AbstractMd2DataStore {
             if (value == null)
                 out.nullValue();
             else
-                out.value(value.getTime() / 1000);
+                out.value(value.getTime());
         }
 
         @Override
         public Timestamp read(JsonReader in) throws IOException {
             if (in != null)
-                return new Timestamp(in.nextLong() / 1000);
+                return new Timestamp(in.nextLong());
             else
                 return null;
         }

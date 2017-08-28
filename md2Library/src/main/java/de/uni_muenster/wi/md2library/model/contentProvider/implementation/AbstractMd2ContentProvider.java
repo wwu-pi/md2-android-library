@@ -253,18 +253,11 @@ public abstract class AbstractMd2ContentProvider implements Md2ContentProvider {
     public void save() {
         if (content == null || md2DataStore == null)
             return;
-
-        if (existsInDataStore)
-            md2DataStore.put(internalId, this.content);
+        if (content.getId()>0)
+            md2DataStore.put(content.getId(), this.content);
         else {
-            long newId = 0;
-            //long newId = md2DataStore.put(this.content);
-            if (newId > 0) {
-                this.existsInDataStore = true;
-                this.internalId = newId;
-            }
+            md2DataStore.put(this.content);
         }
-
         this.backup = (Md2Entity) content.clone();
     }
     @Override
