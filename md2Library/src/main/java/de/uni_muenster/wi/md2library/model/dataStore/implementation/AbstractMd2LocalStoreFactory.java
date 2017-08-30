@@ -1,6 +1,7 @@
 package de.uni_muenster.wi.md2library.model.dataStore.implementation;
 
 import de.uni_muenster.wi.md2library.controller.interfaces.Md2Controller;
+import de.uni_muenster.wi.md2library.model.dataStore.interfaces.Md2DataStore;
 import de.uni_muenster.wi.md2library.model.dataStore.interfaces.Md2LocalDataStoreFactory;
 import de.uni_muenster.wi.md2library.model.dataStore.interfaces.Md2LocalStore;
 import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Entity;
@@ -54,7 +55,7 @@ public abstract class AbstractMd2LocalStoreFactory extends AbstractMd2DataStoreF
      * @param entity the name of the entity managed by the content provider the data store is associated with
      */
     @Override
-    public abstract <T extends Md2Entity> Md2LocalStore<T > getDataStore(String entity); //{
+    public abstract <T extends Md2Entity> Md2DataStore getDataStore(String entity); //{
      /*   if (fullyQualifiedFactoryName == null || fullyQualifiedFactoryName.isEmpty())
             return new Md2SQLiteDataStore(controller.getMd2SQLiteHelper());
 
