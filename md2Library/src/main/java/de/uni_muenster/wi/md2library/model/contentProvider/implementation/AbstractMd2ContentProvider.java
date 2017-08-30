@@ -1,5 +1,7 @@
 package de.uni_muenster.wi.md2library.model.contentProvider.implementation;
 
+import com.google.common.base.Predicates;
+
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.HashMap;
@@ -9,6 +11,7 @@ import java.util.Set;
 import de.uni_muenster.wi.md2library.controller.eventhandler.implementation.Md2OnAttributeChangedHandler;
 import de.uni_muenster.wi.md2library.model.contentProvider.interfaces.Md2ContentProvider;
 import de.uni_muenster.wi.md2library.model.dataStore.Filter;
+import de.uni_muenster.wi.md2library.model.dataStore.implementation.AbstractMd2OrmLiteDatastore;
 import de.uni_muenster.wi.md2library.model.dataStore.interfaces.Md2DataStore;
 import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Entity;
 import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Type;
@@ -252,8 +255,9 @@ public abstract class AbstractMd2ContentProvider implements Md2ContentProvider {
     public void update(){
         Timestamp oldStamp = syncTimestamp;
         this.syncTimestamp = new Timestamp(System.currentTimeMillis());
-
+//if(!(this.md2DataStore instanceof AbstractMd2OrmLiteDatastore)){
         md2DataStore.query(this.filter, oldStamp);
+    //}
 
     }
     @Override

@@ -10,6 +10,7 @@ import java.util.List;
 
 import de.uni_muenster.wi.md2library.model.contentProvider.interfaces.Md2MultiContentProvider;
 import de.uni_muenster.wi.md2library.model.dataStore.Filter;
+import de.uni_muenster.wi.md2library.model.dataStore.implementation.AbstractMd2OrmLiteDatastore;
 import de.uni_muenster.wi.md2library.model.dataStore.interfaces.Md2DataStore;
 import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Entity;
 import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Type;
@@ -221,8 +222,10 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
             System.out.println("Filter null???");
         }
         else {
-            dataStore.query(this.filter, oldStamp);
-        }
+           // if(!(this.dataStore instanceof AbstractMd2OrmLiteDatastore)) {
+                dataStore.query(this.filter, oldStamp);
+          //  }
+            }
 
     }
 
