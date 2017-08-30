@@ -180,7 +180,7 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
                 boolean found = false;
                 for(int i =0;i<entities.size();i++){
                     if(((ArrayList<Md2Entity>) entities).get(i).getId()==0L){
-                        if(entityUpdate.equals(((ArrayList<Md2Entity>) entities).get(i)) &&entityUpdate.getModifiedDate().after(((ArrayList<Md2Entity>) entities).get(i).getModifiedDate())){
+                        if(entityUpdate.equals(((ArrayList<Md2Entity>) entities).get(i))){
                             ((ArrayList<Md2Entity>) entities).set(i,entityUpdate);
                             found=true;
                         }
