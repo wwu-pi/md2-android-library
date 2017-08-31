@@ -34,6 +34,6 @@ public interface IContentProvider {
 
     void reset();
 
-
+    void resetLocal();
 
 }

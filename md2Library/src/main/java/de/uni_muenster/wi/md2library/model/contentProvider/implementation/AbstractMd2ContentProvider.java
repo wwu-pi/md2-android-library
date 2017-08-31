@@ -287,4 +287,9 @@ public abstract class AbstractMd2ContentProvider implements Md2ContentProvider {
         }
     }
 
+    @Override
+    public void resetLocal(){
+        newEntity();
+    }
+
 }
