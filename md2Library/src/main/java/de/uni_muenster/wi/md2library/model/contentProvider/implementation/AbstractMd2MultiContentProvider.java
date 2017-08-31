@@ -87,7 +87,12 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
     //}
 
     public void removeAll() {
+        for(Md2Entity e : entities){
+            this.dataStore.remove(e.getId(), e.getClass());
+        }
         this.entities.clear();
+        currentIndex = 0;
+        notifyAllAdapters();
     }
 
 
@@ -142,9 +147,13 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
 
     public void remove() {
         dataStore.remove(((Md2Entity)((ArrayList)this.entities).get(currentIndex)).getId(),((ArrayList)this.entities).get(currentIndex).getClass() );
+        ((ArrayList<Md2Entity>) entities).remove(currentIndex);
+        currentIndex = 0;
+        notifyAllAdapters();
     }
 
     public void remove(int i) {
+        dataStore.remove(((Md2Entity)((ArrayList)this.entities).get(i)).getId(),((ArrayList)this.entities).get(i).getClass() );
         ((ArrayList<Md2Entity>) entities).remove(i);
         notifyAllAdapters();
     }
@@ -219,7 +228,7 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
         this.syncTimestamp = new Timestamp(System.currentTimeMillis());
 
         if(this.filter == null){
-            System.out.println("Filter null???");
+            System.out.println("Filter null");
         }
         else {
            // if(!(this.dataStore instanceof AbstractMd2OrmLiteDatastore)) {
