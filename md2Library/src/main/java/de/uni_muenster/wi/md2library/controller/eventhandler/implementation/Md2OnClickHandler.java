@@ -27,6 +27,7 @@ public class Md2OnClickHandler extends AbstractMd2WidgetEventHandler implements 
 
     @Override
     public void onClick(View v) {
+        System.out.println("clicked");
         this.execute();
     }
 
@@ -38,6 +39,12 @@ public class Md2OnClickHandler extends AbstractMd2WidgetEventHandler implements 
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public void execute(){
+        super.execute();
+        System.out.println("execute");
     }
 
     @Override

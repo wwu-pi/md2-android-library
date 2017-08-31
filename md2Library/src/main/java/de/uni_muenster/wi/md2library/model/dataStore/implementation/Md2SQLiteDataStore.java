@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.HashMap;
 
+import de.uni_muenster.wi.md2library.model.dataStore.Filter;
+import de.uni_muenster.wi.md2library.model.dataStore.interfaces.Md2DataStore;
 import de.uni_muenster.wi.md2library.model.dataStore.interfaces.Md2LocalStore;
 import de.uni_muenster.wi.md2library.model.dataStore.interfaces.Md2SQLiteHelper;
 import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Entity;
@@ -21,7 +23,7 @@ import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Type;
  * @version 1.0
  * @since 1.0
  */
-public class Md2SQLiteDataStore extends AbstractMd2DataStore implements Md2LocalStore {
+public class Md2SQLiteDataStore extends AbstractMd2DataStore implements Md2LocalStore,Md2DataStore {
 
     /**
      * The Sq lite helper.
@@ -39,24 +41,24 @@ public class Md2SQLiteDataStore extends AbstractMd2DataStore implements Md2Local
     }
 
     @Override
-    public Md2Entity query(String query) {
+    public void query(Filter filter) {
         // TODO: implement query method in SQLite DataStore
-        return null;
+        //return null;
     }
 
     @Override
-    public HashMap<String, String> load(long id, String typeName) {
+    public void load(long id, Class dataType) {
 
         SQLiteDatabase db = sqLiteHelper.open(false);
 
-        String[] columns = sqLiteHelper.getAllColumns(typeName);
+        String[] columns = sqLiteHelper.getAllColumns(dataType.getClass().getSimpleName());
 
         String selection = "_id = ?";
 
         String[] values = {String.valueOf(id)};
 
         Cursor cursor = db.query(
-                typeName.toLowerCase(),  // The table to query
+                dataType.getClass().getSimpleName().toLowerCase(),  // The table to query
                 columns,                               // The columns to return
                 selection,                                // The columns for the WHERE clause
                 values,                            // The values for the WHERE clause
@@ -75,11 +77,11 @@ public class Md2SQLiteDataStore extends AbstractMd2DataStore implements Md2Local
         }
         cursor.close();
         db.close();
-        return result;
+        //return result;
     }
 
     @Override
-    public long getInternalId(Md2Entity entity) {
+    public void getInternalId(Md2Entity entity) {
         SQLiteDatabase db = sqLiteHelper.open(false);
 
         String[] projection = {"_id"};
@@ -123,14 +125,14 @@ public class Md2SQLiteDataStore extends AbstractMd2DataStore implements Md2Local
 
         cursor.close();
         db.close();
-        return id;
+        //return id;
     }
 
     @Override
-    public long put(Md2Entity md2Entity) {
+    public void put(Md2Entity md2Entity) {
         // entity exists
         if (md2Entity.getId() > -1) {
-            return put(md2Entity.getId(), md2Entity);
+            //return put(md2Entity.getId(), md2Entity);
         }
 
         // Gets the data repository in write mode
@@ -156,11 +158,11 @@ public class Md2SQLiteDataStore extends AbstractMd2DataStore implements Md2Local
                 values);
 
         db.close();
-        return newRowId;
+        //return newRowId;
     }
 
     @Override
-    public long put(long id, Md2Entity md2Entity) {
+    public void put(long id, Md2Entity md2Entity) {
         SQLiteDatabase db = sqLiteHelper.open(true);
 
         String[] columns = sqLiteHelper.getAllColumns(md2Entity.getTypeName());
@@ -188,15 +190,15 @@ public class Md2SQLiteDataStore extends AbstractMd2DataStore implements Md2Local
                 null);
 
         db.close();
-        return (count == 1) ? id : -1;
+        //return (count == 1) ? id : -1;
     }
 
     @Override
-    public void remove(long id, Md2Entity entity) {
+    public void remove(long id, Class md2Entity) {
 
         SQLiteDatabase db = sqLiteHelper.open(true);
 
-        db.delete(entity.getTypeName(), "_id"
+        db.delete(md2Entity.getSimpleName(), "_id"
                 + " = " + id, null);
 
         db.close();
