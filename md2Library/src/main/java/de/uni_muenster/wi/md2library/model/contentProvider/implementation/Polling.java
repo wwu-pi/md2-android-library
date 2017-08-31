@@ -25,7 +25,7 @@ public class Polling implements Runnable {
                 cpr.getMultiContentProvider().get(key).update();
 
             try {
-                Thread.sleep (10000);
+                Thread.sleep (5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

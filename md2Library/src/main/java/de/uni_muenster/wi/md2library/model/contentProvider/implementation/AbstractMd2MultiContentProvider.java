@@ -242,6 +242,11 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
         removeAll();
     }
 
+    public void resetLocal(){
+        entities.clear();
+        notifyAllAdapters();
+    }
+
 }
 
 
