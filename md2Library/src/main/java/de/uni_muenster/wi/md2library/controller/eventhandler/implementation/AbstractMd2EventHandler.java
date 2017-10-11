@@ -56,12 +56,17 @@ public abstract class AbstractMd2EventHandler implements Md2EventHandler {
      * @param action the action
      */
     protected void addAction(Md2Action action) {
-        if (actions.contains(action))
+        for(int i = 0; i < getActions().size();i++){
+            if(getActions().get(i).equals(action)){
+                return;
+            }
+        }
+        if (actions.contains(action)) {
             return;
-
-
+       }
         actions.add(action);
     }
+
 
     /**
      * Remove action.

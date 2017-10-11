@@ -13,25 +13,20 @@ import android.view.View;
  * @version 1.0
  * @since 1.0
  */
-public class Md2OnLeftSwipeHandler extends AbstractMd2OnSwipeHandler implements View.OnTouchListener {
+//angepasst für funktionierende Swipe-Implementierung 12.05.
+public class Md2OnLeftSwipeHandler extends AbstractMd2WidgetEventHandler{
 
     /**
      * Instantiates a new Md 2 on left swipe handler.
      *
-     * @param context the context
      */
-    public Md2OnLeftSwipeHandler(Context context) {
-        super(context);
+    public Md2OnLeftSwipeHandler() {
+        super();
     }
 
-    @Override
-    public boolean onSwipeRight() {
+    public boolean onSwipeLeft() {
+        this.execute();
         return false;
     }
 
-    @Override
-    public boolean onSwipeLeft() {
-        this.execute();
-        return true;
-    }
 }

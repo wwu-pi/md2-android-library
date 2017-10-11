@@ -1,5 +1,7 @@
 package de.uni_muenster.wi.md2library.model.contentProvider.interfaces;
 
+import java.util.List;
+
 import de.uni_muenster.wi.md2library.controller.eventhandler.implementation.Md2OnAttributeChangedHandler;
 import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Entity;
 import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Type;
@@ -14,7 +16,7 @@ import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Type;
  * @version 1.0
  * @since 1.0
  */
-public interface Md2ContentProvider {
+public interface Md2ContentProvider extends IContentProvider {
     /**
      * Gets key.
      *
@@ -94,4 +96,11 @@ public interface Md2ContentProvider {
      * Remove.
      */
     void remove();
+
+
+
+    /**
+     * Update.
+     */
+    void update();
 }
