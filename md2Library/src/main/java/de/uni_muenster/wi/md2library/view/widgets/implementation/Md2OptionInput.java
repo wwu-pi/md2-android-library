@@ -6,6 +6,7 @@ import android.widget.Spinner;
 
 import de.uni_muenster.wi.md2library.controller.eventhandler.implementation.Md2OnChangedHandler;
 import de.uni_muenster.wi.md2library.controller.eventhandler.implementation.Md2OnClickHandler;
+import de.uni_muenster.wi.md2library.controller.eventhandler.implementation.Md2OnLongClickHandler;
 import de.uni_muenster.wi.md2library.model.type.implementation.Md2String;
 import de.uni_muenster.wi.md2library.model.type.interfaces.Md2Type;
 import de.uni_muenster.wi.md2library.view.widgets.interfaces.Md2Content;
@@ -35,6 +36,13 @@ public class Md2OptionInput extends Spinner implements Md2Content {
      * The On changed handler.
      */
     protected Md2OnChangedHandler onChangedHandler;
+
+    /**
+     * Sets on click handler.
+     *
+     * @param onLongClickHandler the on click handler
+     */
+    protected Md2OnLongClickHandler onLongClickHandler;
 
     /**
      * Instantiates a new Md2 text input.
@@ -153,6 +161,18 @@ public class Md2OptionInput extends Spinner implements Md2Content {
     @Override
     public void setOnChangedHandler(Md2OnChangedHandler onChangedHandler) {
         this.onChangedHandler = onChangedHandler;
+    }
+
+    @Override
+    public Md2OnLongClickHandler getOnLongClickHandler() {
+        return this.onLongClickHandler;
+    }
+
+    @Override
+    public boolean setOnLongClickHandler(Md2OnLongClickHandler onLongClickHandler) {
+        this.setOnLongClickListener(onLongClickHandler);
+        this.onLongClickHandler = onLongClickHandler;
+        return true;
     }
 
     @Override
