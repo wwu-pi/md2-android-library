@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/androidWear.iml" filepath="$PROJECT_DIR$/androidWear.iml" />
+      <module fileurl="file://$PROJECT_DIR$/md2Library-debug/md2Library-debug.iml" filepath="$PROJECT_DIR$/md2Library-debug/md2Library-debug.iml" />
+      <module fileurl="file://$PROJECT_DIR$/md2libraryWear/md2libraryWear.iml" filepath="$PROJECT_DIR$/md2libraryWear/md2libraryWear.iml" />
+    </modules>
+  </component>
+</project>
