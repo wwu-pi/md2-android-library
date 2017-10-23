@@ -1,4 +1,4 @@
-package de.uni_muenster.wi.md2library;
+package de.uni_muenster.wi.md2library.model.contentProvider;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -130,7 +130,7 @@ public class SensorHelper {
 
         Md2AttributeSetTask var3 = null;
         try {
-            var3 = new Md2AttributeSetTask("SensorDatenProvider", varName, new Md2Sensor(sensorVal));
+            var3 = new Md2AttributeSetTask("SensorDataProvider", varName, new Md2Sensor(sensorVal));
             var3.execute();
         }catch (Md2WidgetNotCreatedException e){
             Md2TaskQueue.getInstance().addPendingTask(var3);
