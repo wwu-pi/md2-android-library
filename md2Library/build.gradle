@@ -29,14 +29,12 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'junit:junit:4.12'
-    testCompile 'junit:junit:4.12'
-    compile 'org.reflections:reflections:0.9.10'
-    compile group: 'com.j256.ormlite', name: 'ormlite-android', version: '4.45'
-	compile 'com.android.volley:volley:1.0.0'
-	compile 'com.google.code.gson:gson:2.8.0'
-    compile 'com.android.support:recyclerview-v7:26.1.0'
-    //compile 'com.google.android.support:wearable:2.2.0'
-    //provided 'com.google.android.wearable:wearable:2.2.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
+    implementation 'org.reflections:reflections:0.9.10'
+    implementation group: 'com.j256.ormlite', name: 'ormlite-android', version: '4.45'
+    implementation 'com.android.volley:volley:1.0.0'
+    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.android.support:recyclerview-v7:26.0.2'
 }
