@@ -6,6 +6,7 @@ import android.widget.Spinner;
 
 import de.wwu.md2.android.md2library.controller.eventhandler.implementation.Md2OnChangedHandler;
 import de.wwu.md2.android.md2library.controller.eventhandler.implementation.Md2OnClickHandler;
+import de.wwu.md2.android.md2library.controller.eventhandler.implementation.Md2OnLongClickHandler;
 import de.wwu.md2.android.md2library.model.type.implementation.Md2String;
 import de.wwu.md2.android.md2library.model.type.interfaces.Md2Type;
 import de.wwu.md2.android.md2library.view.widgets.interfaces.Md2Content;
@@ -30,6 +31,11 @@ public class Md2OptionInput extends Spinner implements Md2Content {
      * The On click handler.
      */
     protected Md2OnClickHandler onClickHandler;
+
+    /**
+     * The On long click handler.
+     */
+    protected Md2OnLongClickHandler onLongClickHandler;
 
     /**
      * The On changed handler.
@@ -143,6 +149,18 @@ public class Md2OptionInput extends Spinner implements Md2Content {
     public void setOnClickHandler(Md2OnClickHandler onClickHandler) {
         this.onClickHandler = onClickHandler;
         this.setOnItemSelectedListener(onClickHandler);
+    }
+
+    @Override
+    public Md2OnLongClickHandler getOnLongClickHandler() {
+        return this.onLongClickHandler;
+    }
+
+    @Override
+    public boolean setOnLongClickHandler(Md2OnLongClickHandler onLongClickHandler) {
+        this.onLongClickHandler = onLongClickHandler;
+        this.setOnLongClickListener(onLongClickHandler);
+        return true;
     }
 
     @Override
