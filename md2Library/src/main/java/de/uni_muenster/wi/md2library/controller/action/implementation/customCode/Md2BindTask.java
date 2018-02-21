@@ -8,6 +8,7 @@ import de.uni_muenster.wi.md2library.exception.Md2WidgetNotCreatedException;
 import de.uni_muenster.wi.md2library.model.contentProvider.implementation.Md2ContentProviderRegistry;
 import de.uni_muenster.wi.md2library.model.contentProvider.interfaces.Md2ContentProvider;
 import de.uni_muenster.wi.md2library.view.management.implementation.Md2ViewManager;
+import de.uni_muenster.wi.md2library.view.widgets.implementation.Md2Button;
 import de.uni_muenster.wi.md2library.view.widgets.interfaces.Md2Widget;
 
 /**
@@ -83,6 +84,8 @@ public class Md2BindTask implements Md2CustomCodeTask {
                 throw new Md2WidgetNotCreatedException();
             }
 
+
+
             switch (eventType) {
                 case ON_CHANGE:
                     widget.getOnChangedHandler().registerAction(action);
@@ -90,7 +93,22 @@ public class Md2BindTask implements Md2CustomCodeTask {
                 case ON_CLICK:
                     widget.getOnClickHandler().registerAction(action);
                     break;
-                // TODO: implement other event types
+                case ON_LONG_CLICK:
+                    widget.getOnLongClickHandler().registerAction(action);
+                    break;
+                //added support for left and right swipe
+                case ON_RIGHT_SWIPE:
+                    if(widget instanceof Md2Button){
+                        Md2Button b = (Md2Button) widget;
+                        b.getOnSwipeHandler().registerAction(action, true);
+                    }
+                    break;
+                case ON_LEFT_SWIPE:
+                    if(widget instanceof Md2Button){
+                        System.out.println("neu hinzugefügt");
+                        Md2Button b = (Md2Button) widget;
+                        b.getOnSwipeHandler().registerAction(action, false);
+                    }
                 default:
                     return; // TODO: possible improvement: add general task execution exception
             }
