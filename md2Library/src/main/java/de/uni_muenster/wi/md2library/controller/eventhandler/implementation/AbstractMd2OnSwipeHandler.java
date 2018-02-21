@@ -1,9 +1,14 @@
 package de.uni_muenster.wi.md2library.controller.eventhandler.implementation;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
+import de.uni_muenster.wi.md2library.view.widgets.implementation.Md2Button;
 
 /**
  * Abstract super class for swipe event handlers.
@@ -17,16 +22,19 @@ import android.view.View;
  */
 public abstract class AbstractMd2OnSwipeHandler extends AbstractMd2WidgetEventHandler implements View.OnTouchListener {
 
-    private final GestureDetector gestureDetector;
+    private float xtouch;
+    private float xmove;
+    private boolean rightSwipe = false;
+    private boolean leftSwipe = false;
+    private Rect rect;
+
 
     /**
      * Instantiates a new Abstract md 2 on swipe handler.
      *
-     * @param context the context
      */
-    public AbstractMd2OnSwipeHandler(Context context) {
+    public AbstractMd2OnSwipeHandler() {
         super();
-        gestureDetector = new GestureDetector(context, new GestureListener());
     }
 
     /**
@@ -44,31 +52,74 @@ public abstract class AbstractMd2OnSwipeHandler extends AbstractMd2WidgetEventHa
      */
     public abstract boolean onSwipeLeft();
 
-    public boolean onTouch(View v, MotionEvent event) {
-        return gestureDetector.onTouchEvent(event);
-    }
+    @Override
+    public boolean onTouch(View view, MotionEvent event) {
+        switch (event.getAction()) {
+             //first Touch
+            case MotionEvent.ACTION_DOWN: {
 
-    private final class GestureListener extends GestureDetector.SimpleOnGestureListener {
+                //disable scroll
+                Button b = (Button) view;
+                System.out.println(b.getText());
+                rect = new Rect(view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
+                int x = (int)(event.getX());
+                int y = (int )(event.getY());
+                System.out.println(rect.contains(x,y));
 
-        private static final int SWIPE_DISTANCE_THRESHOLD = 100;
-        private static final int SWIPE_VELOCITY_THRESHOLD = 100;
+                view.getParent().requestDisallowInterceptTouchEvent(true);
 
-        @Override
-        public boolean onDown(MotionEvent e) {
-            return true;
-        }
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            float distanceX = e2.getX() - e1.getX();
-            float distanceY = e2.getY() - e1.getY();
-            if (Math.abs(distanceX) > Math.abs(distanceY) && Math.abs(distanceX) > SWIPE_DISTANCE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                if (distanceX > 0)
-                    return onSwipeRight();
-                else
-                    return onSwipeLeft();
+                //set xtouch and reset xmove
+                xtouch = event.getX();
+                xmove = xtouch;
+                break;
             }
-            return false;
+
+            //release
+            case MotionEvent.ACTION_UP: {
+
+                //decide if swiped
+                float width = view.getWidth();
+                float abs = Math.abs(xmove - xtouch);
+                if (abs > (width / 2.5)) {
+                    if (xmove > xtouch) {
+                        rightSwipe = true;
+                    } else if (xmove < xtouch) {
+                        leftSwipe = true;
+                    }
+                }
+
+                //perform action on swipe
+                if (leftSwipe) {
+                    leftSwipe = false;
+                    return onSwipeLeft();
+                }
+                if (rightSwipe) {
+                    rightSwipe = false;
+                    return onSwipeRight();
+                }
+                    // den Klick an den OnClickHandler weiterleiten
+                    //if (view instanceof Md2Button){
+                    //    Md2Button b = (Md2Button) view;
+                    //    System.out.println("klick1");
+                    //    b.getOnClickHandler().execute();
+                    //}
+                break;
+            }
+
+            //swipe: change xmove
+            case MotionEvent.ACTION_MOVE: {
+                if(!rect.contains(view.getLeft() + (int) event.getX(), view.getTop() + (int) event.getY())){
+                    view.getParent().requestDisallowInterceptTouchEvent(false);
+                }
+
+                xmove = event.getX();
+                break;
+            }
         }
+        return false;
     }
+
 }
+
+
+
