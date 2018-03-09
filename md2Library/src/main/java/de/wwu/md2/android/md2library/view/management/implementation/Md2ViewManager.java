@@ -26,6 +26,8 @@ public class Md2ViewManager {
      * The Active view.
      */
     protected Activity activeView;
+	
+	protected String startActivityName = "";
 
     /**
      * Gets instance of the Md2ViewManager.
@@ -111,6 +113,14 @@ public class Md2ViewManager {
      * Go to initial workflow selection screen
      */
     public void goToStartActivity(){
-        this.goTo("md2.mamlproject.StartActivity");
+        this.goTo(this.startActivityName);
     }
+	
+	/**
+     * Set name of initial workflow selection screen
+     */
+    public void setStartActivity(String activityName){
+        this.startActivityName = activityName;
+    }
+	
 }
