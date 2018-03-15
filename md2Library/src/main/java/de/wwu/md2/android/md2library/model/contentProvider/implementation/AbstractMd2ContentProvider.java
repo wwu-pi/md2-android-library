@@ -9,6 +9,7 @@ import de.wwu.md2.android.md2library.controller.eventhandler.implementation.Md2O
 import de.wwu.md2.android.md2library.model.contentProvider.interfaces.Md2ContentProvider;
 import de.wwu.md2.android.md2library.model.dataStore.Filter;
 import de.wwu.md2.android.md2library.model.dataStore.interfaces.Md2DataStore;
+import de.wwu.md2.android.md2library.model.dataStore.interfaces.Md2LocalStore;
 import de.wwu.md2.android.md2library.model.type.interfaces.Md2Entity;
 import de.wwu.md2.android.md2library.model.type.interfaces.Md2Type;
 
@@ -156,7 +157,7 @@ public abstract class AbstractMd2ContentProvider implements Md2ContentProvider {
             }
         }
     }
-    private void callAllHandlers(){
+    protected void callAllHandlers(){
         for (String key: this.attributeChangedEventHandlers.keySet()){
             Md2OnAttributeChangedHandler handler = getOnAttributeChangedHandler(key);
             handler.onChange(key);
@@ -249,12 +250,13 @@ public abstract class AbstractMd2ContentProvider implements Md2ContentProvider {
     }
     @Override
     public void update(){
-        Timestamp oldStamp = syncTimestamp;
-        this.syncTimestamp = new Timestamp(System.currentTimeMillis());
-//if(!(this.md2DataStore instanceof AbstractMd2OrmLiteDatastore)){
-        md2DataStore.query(this.filter, oldStamp);
-    //}
-
+        if(!(this.md2DataStore instanceof Md2LocalStore)) {
+            Timestamp oldStamp = syncTimestamp;
+            this.syncTimestamp = new Timestamp(System.currentTimeMillis());
+            //if(!(this.md2DataStore instanceof AbstractMd2OrmLiteDatastore)){
+            md2DataStore.query(this.filter, oldStamp);
+            //}
+        }
     }
     @Override
     public void remove() {

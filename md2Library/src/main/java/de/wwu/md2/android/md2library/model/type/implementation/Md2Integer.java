@@ -116,6 +116,46 @@ public class Md2Integer extends AbstractMd2NumericType {
     }
 
     @Override
+    public Md2NumericType plus(Md2NumericType value) {
+        if(value instanceof Md2Float){
+            return new Md2Integer(getPlatformValue() + ((Float) value.getPlatformValue()).intValue());
+        } else if(value instanceof Md2Integer){
+            return new Md2Integer(getPlatformValue() + (Integer) value.getPlatformValue());
+        }
+        return null;
+    }
+
+    @Override
+    public Md2NumericType minus(Md2NumericType value) {
+        if(value instanceof Md2Float){
+            return new Md2Integer(getPlatformValue() - ((Float) value.getPlatformValue()).intValue());
+        } else if(value instanceof Md2Integer){
+            return new Md2Integer(getPlatformValue() - (Integer) value.getPlatformValue());
+        }
+        return null;
+    }
+
+    @Override
+    public Md2NumericType mult(Md2NumericType value) {
+        if(value instanceof Md2Float){
+            return new Md2Integer((int) (getPlatformValue() * (Float) value.getPlatformValue()));
+        } else if(value instanceof Md2Integer){
+            return new Md2Integer(getPlatformValue() * (Integer) value.getPlatformValue());
+        }
+        return null;
+    }
+
+    @Override
+    public Md2NumericType div(Md2NumericType value) {
+        if(value instanceof Md2Float){
+            return new Md2Integer((int) (getPlatformValue() / (Float) value.getPlatformValue()));
+        } else if(value instanceof Md2Integer){
+            return new Md2Integer(getPlatformValue() / (Integer) value.getPlatformValue());
+        }
+        return null;
+    }
+
+    @Override
     public Md2String getString() {
         return super.getString();
     }

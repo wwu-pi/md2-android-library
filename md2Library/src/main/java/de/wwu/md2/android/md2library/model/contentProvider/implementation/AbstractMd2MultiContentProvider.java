@@ -87,7 +87,7 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
 
     public void removeAll() {
         for(Md2Entity e : entities){
-            this.dataStore.remove(e.getId(), e.getClass());
+            this.dataStore.remove(e.getId(), e.getClass()); // TODO check if correct behaviour?!
         }
         this.entities.clear();
         currentIndex = 0;

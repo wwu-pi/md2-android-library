@@ -75,6 +75,9 @@ public class Md2SQLiteDataStore extends AbstractMd2DataStore implements Md2Local
                 ) {
             result.put(col, cursor.getString(cursor.getColumnIndexOrThrow(col)));
         }
+        System.out.println("Loaded " + result.values().size() + "items");
+
+
         cursor.close();
         db.close();
         //return result;
@@ -122,6 +125,7 @@ public class Md2SQLiteDataStore extends AbstractMd2DataStore implements Md2Local
         if (cursor.getCount() > 0) {
             id = cursor.getLong(cursor.getColumnIndexOrThrow("_id"));
         }
+        System.out.println("Retrieved Id: " + id);
 
         cursor.close();
         db.close();
@@ -156,6 +160,7 @@ public class Md2SQLiteDataStore extends AbstractMd2DataStore implements Md2Local
         newRowId = db.insert(
                 md2Entity.getTypeName().toLowerCase(), null,
                 values);
+        System.out.println("New row id: " + newRowId);
 
         db.close();
         //return newRowId;
@@ -188,6 +193,7 @@ public class Md2SQLiteDataStore extends AbstractMd2DataStore implements Md2Local
                 values,
                 selection,
                 null);
+        System.out.println("Updated " + count + "rows");
 
         db.close();
         //return (count == 1) ? id : -1;
@@ -200,6 +206,7 @@ public class Md2SQLiteDataStore extends AbstractMd2DataStore implements Md2Local
 
         db.delete(md2Entity.getSimpleName(), "_id"
                 + " = " + id, null);
+        System.out.println("Entity deletion");
 
         db.close();
     }

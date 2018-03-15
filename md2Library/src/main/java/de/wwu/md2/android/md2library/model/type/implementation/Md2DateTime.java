@@ -19,7 +19,7 @@ import de.wwu.md2.android.md2library.model.type.interfaces.Md2Type;
  * @version 1.0
  * @since 1.0
  */
-public class Md2DateTime extends AbstractMd2NumericType {
+public class Md2DateTime extends AbstractMd2TemporalType {
     /**
      * Instantiates a new Md2 date time.
      */

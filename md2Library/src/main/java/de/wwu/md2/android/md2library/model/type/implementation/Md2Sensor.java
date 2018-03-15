@@ -9,7 +9,7 @@ import de.wwu.md2.android.md2library.model.type.interfaces.Md2Type;
  * Created by Tobias on 13.05.2017.
  */
 
-public class Md2Sensor extends AbstractMd2NumericType{
+public class Md2Sensor extends AbstractMd2DataType {
     /**
      * Instantiates a new Md2 float.
      */
@@ -36,7 +36,6 @@ public class Md2Sensor extends AbstractMd2NumericType{
         return new Md2Sensor(this.getPlatformValue());
     }
 
-    @Override
     public boolean gt(Md2NumericType value) {
         float floatValue;
         try {
@@ -48,7 +47,6 @@ public class Md2Sensor extends AbstractMd2NumericType{
         return (this.getPlatformValue() > floatValue);
     }
 
-    @Override
     public boolean gte(Md2NumericType value) {
         float floatValue;
         try {
@@ -60,7 +58,6 @@ public class Md2Sensor extends AbstractMd2NumericType{
         return (this.getPlatformValue() >= floatValue);
     }
 
-    @Override
     public boolean lt(Md2NumericType value) {
         float intValue;
         try {
@@ -72,7 +69,6 @@ public class Md2Sensor extends AbstractMd2NumericType{
         return (this.getPlatformValue() < intValue);
     }
 
-    @Override
     public boolean lte(Md2NumericType value) {
         float floatValue;
         try {

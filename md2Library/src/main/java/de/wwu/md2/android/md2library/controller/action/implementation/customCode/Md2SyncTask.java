@@ -1,5 +1,8 @@
 package de.wwu.md2.android.md2library.controller.action.implementation.customCode;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import de.wwu.md2.android.md2library.controller.action.implementation.customCode.interfaces.Md2CustomCodeTask;
 import de.wwu.md2.android.md2library.exception.Md2WidgetNotCreatedException;
 import de.wwu.md2.android.md2library.model.contentProvider.implementation.Md2ContentProviderRegistry;
@@ -51,7 +54,15 @@ public class Md2SyncTask implements Md2CustomCodeTask {
 
             Md2Content content = (Md2Content) widget;
             Md2Type value = Md2ContentProviderRegistry.getInstance().getContentProvider(contentProvider).getValue(attribute);
-            content.setValue(value);
+
+            // Make change to UI in main thread!
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    content.setValue(value);
+                }
+            });
 
         } else {
             Md2ContentProvider cp = Md2ContentProviderRegistry.getInstance().getContentProvider(contentProvider);

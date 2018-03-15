@@ -86,7 +86,10 @@ public class Md2ViewManager {
      * @return the widget
      */
     public Md2Widget getWidget(int widgetId) {
-        Md2Widget widget = (Md2Widget) activeView.findViewById(widgetId);
+        Md2Widget widget = null;
+        try {
+            widget = (Md2Widget) activeView.findViewById(widgetId);
+        } catch(NullPointerException e){ /* view not instantiated */ }
         return (widget != null) ? widget : Md2WidgetRegistry.getInstance().getWidget(widgetId);
     }
 

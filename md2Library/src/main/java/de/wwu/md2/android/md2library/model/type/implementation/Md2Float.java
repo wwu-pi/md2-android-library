@@ -115,6 +115,46 @@ public class Md2Float extends AbstractMd2NumericType {
     }
 
     @Override
+    public Md2NumericType plus(Md2NumericType value) {
+        if(value instanceof Md2Float){
+            return new Md2Float(getPlatformValue() + (Float) value.getPlatformValue());
+        } else if(value instanceof Md2Integer){
+            return new Md2Float(getPlatformValue() + (Integer) value.getPlatformValue());
+        }
+        return null;
+    }
+
+    @Override
+    public Md2NumericType minus(Md2NumericType value) {
+        if(value instanceof Md2Float){
+            return new Md2Float(getPlatformValue() - (Float) value.getPlatformValue());
+        } else if(value instanceof Md2Integer){
+            return new Md2Float(getPlatformValue() - (Integer) value.getPlatformValue());
+        }
+        return null;
+    }
+
+    @Override
+    public Md2NumericType mult(Md2NumericType value) {
+        if(value instanceof Md2Float){
+            return new Md2Float(getPlatformValue() * (Float) value.getPlatformValue());
+        } else if(value instanceof Md2Integer){
+            return new Md2Float(getPlatformValue() * (Integer) value.getPlatformValue());
+        }
+        return null;
+    }
+
+    @Override
+    public Md2NumericType div(Md2NumericType value) {
+        if(value instanceof Md2Float){
+            return new Md2Float(getPlatformValue() / (Float) value.getPlatformValue());
+        } else if(value instanceof Md2Integer){
+            return new Md2Float(getPlatformValue() / ((Integer) value.getPlatformValue()).floatValue());
+        }
+        return null;
+    }
+
+    @Override
     public Md2String getString() {
         DecimalFormat df = new DecimalFormat("#.#");
         return new Md2String(df.format(this.getPlatformValue()));

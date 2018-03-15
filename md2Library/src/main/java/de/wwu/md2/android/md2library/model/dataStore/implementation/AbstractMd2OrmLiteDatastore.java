@@ -31,11 +31,12 @@ public abstract class AbstractMd2OrmLiteDatastore<T extends  Md2Entity> extends 
 
     @Override
     public void query(Filter filter) {
-        if(filter!=null){
-        try {
+       try {
             QueryBuilder<T,Integer > queryBuilder = getMyDao().queryBuilder();
-            Where<T, Integer> where = queryBuilder.where();
-            this.whereBuilder(filter.getFilterTree(),where);
+           if(filter!=null && filter.getFilterTree()!=null) {
+               Where<T, Integer> where = queryBuilder.where();
+               this.whereBuilder(filter.getFilterTree(), where);
+           }
             PreparedQuery query = queryBuilder.prepare();
             System.out.println(query.getStatement());
            contentProvider.overwriteContent(getMyDao().query(query));
@@ -43,7 +44,7 @@ public abstract class AbstractMd2OrmLiteDatastore<T extends  Md2Entity> extends 
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }}
+    }
 
     public void query(Filter filter, Timestamp modifiedDate) {
     /*AtomicExpression atomicExpression;
