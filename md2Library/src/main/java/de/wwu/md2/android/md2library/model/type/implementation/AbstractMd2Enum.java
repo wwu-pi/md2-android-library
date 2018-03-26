@@ -33,6 +33,15 @@ public abstract class AbstractMd2Enum extends AbstractMd2Type implements Md2Enum
     /**
      * Instantiates a new Abstract md 2 enum.
      *
+     */
+    public AbstractMd2Enum() {
+        this.enumName = null;
+        this.values = new ArrayList<>();
+    }
+
+    /**
+     * Instantiates a new Abstract md 2 enum.
+     *
      * @param enumName the enum name
      */
     public AbstractMd2Enum(String enumName) {
