@@ -146,6 +146,8 @@ public class Md2Date extends AbstractMd2TemporalType {
     @Override
     public String toString() {
         Calendar calendar = this.getPlatformValue();
+        if(calendar == null) return "";
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return sdf.format(calendar);
     }

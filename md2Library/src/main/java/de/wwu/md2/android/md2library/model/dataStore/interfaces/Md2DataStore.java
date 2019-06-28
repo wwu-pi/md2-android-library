@@ -25,7 +25,6 @@ public interface Md2DataStore<T extends Md2Entity> {
      * Execute query in data store.
      *
      * @param filter the query
-     * @return the md 2 entity
      */
     void query(Filter filter);
 
