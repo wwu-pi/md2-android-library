@@ -17,10 +17,10 @@ import de.wwu.md2.android.md2library.model.type.interfaces.Md2Type;
 public abstract class AbstractMd2MultiContentProvider implements Md2MultiContentProvider {
 
 
-    private Collection<Md2Entity> entities;
+    protected Collection<Md2Entity> entities;
     protected Timestamp syncTimestamp;
     private String key;
-    private Md2DataStore dataStore;
+    protected Md2DataStore dataStore;
     private int currentIndex;
     protected Filter filter;
     private HashMap<String, RecyclerView.Adapter> adapters = new HashMap<String, RecyclerView.Adapter>();
