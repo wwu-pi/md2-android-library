@@ -149,6 +149,6 @@ public class Md2Date extends AbstractMd2TemporalType {
         if(calendar == null) return "";
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return sdf.format(calendar);
+        return sdf.format(calendar.getTime());
     }
 }

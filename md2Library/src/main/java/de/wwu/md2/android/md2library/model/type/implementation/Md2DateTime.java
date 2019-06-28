@@ -43,7 +43,7 @@ public class Md2DateTime extends AbstractMd2TemporalType {
      */
     public Md2DateTime(Md2String platformValue) {
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         try {
             calendar.setTime(sdf.parse(platformValue.getPlatformValue()));
         } catch (ParseException e) {
@@ -148,7 +148,7 @@ public class Md2DateTime extends AbstractMd2TemporalType {
         Calendar calendar = this.getPlatformValue();
         if(calendar == null) return "";
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ss");
-        return sdf.format(calendar);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        return sdf.format(calendar.getTime());
     }
 }
