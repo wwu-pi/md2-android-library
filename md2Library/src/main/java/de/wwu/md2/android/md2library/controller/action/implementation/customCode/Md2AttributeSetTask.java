@@ -50,4 +50,12 @@ public class Md2AttributeSetTask implements Md2CustomCodeTask {
             Md2ContentProviderRegistry.getInstance().getContentMultiProvider(contentProvider).setValueForAll(attribute, value);
         }
     }
+
+    /**
+     * Function for delayed setting of value after the initial creation of the task.
+     * @param value
+     */
+    public void setValue(Md2Type value){
+        this.value = value;
+    }
 }
