@@ -127,12 +127,12 @@ public class Md2Label extends TextView implements Md2Content {
     @Override
     public void setValue(Md2Type value) {
         if (value == null) {
-            super.setText("");
+            setText("");
             return;
         }
 
         if (!(this.getText() ==(value.toString()))) {
-            super.setText(value.toString());
+            setText(value.toString());
         }
     }
 

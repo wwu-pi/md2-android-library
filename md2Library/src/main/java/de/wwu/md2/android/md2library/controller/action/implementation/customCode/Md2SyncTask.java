@@ -55,14 +55,16 @@ public class Md2SyncTask implements Md2CustomCodeTask {
             Md2Content content = (Md2Content) widget;
             Md2Type value = Md2ContentProviderRegistry.getInstance().getContentProvider(contentProvider).getValue(attribute);
 
-            // Make change to UI in main thread!
-            Handler handler = new Handler(Looper.getMainLooper());
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    content.setValue(value);
-                }
-            });
+            if(value != null) { // TODO check if unsetting values works
+                // Make change to UI in main thread!
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        content.setValue(value);
+                    }
+                });
+            }
 
         } else {
             Md2ContentProvider cp = Md2ContentProviderRegistry.getInstance().getContentProvider(contentProvider);

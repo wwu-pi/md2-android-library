@@ -95,15 +95,14 @@ public class Md2CameraAction extends AbstractMd2Action {
 
                 // Potential memory improvement
                 //imageView.setImageBitmap(resize(bitmap, imageView.getMaxWidth(), imageView.getMaxHeight()));
-                imageView.setImageBitmap(rotateBitmap(bitmap, orientation));
+                bitmap = rotateBitmap(bitmap, orientation);
+                imageView.setImageBitmap(bitmap);
 
                 // Set value
-                if(activeCallback != null){
-                    activeCallback.setValue(new Md2File(bitmap));
-                    activeCallback.execute();
-                    // Recycle if using resized bitmap above
-                    // bitmap.recycle();
-                }
+                activeCallback.setValue(new Md2File(bitmap));
+                activeCallback.execute();
+                // Recycle if using resized bitmap above
+                // bitmap.recycle();
             } catch (Md2WidgetNotCreatedException e){
                 Md2TaskQueue.getInstance().addPendingTask(activeCallback);
             } catch (Exception e) {
