@@ -34,7 +34,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     implementation 'org.reflections:reflections:0.9.10'
     implementation group: 'com.j256.ormlite', name: 'ormlite-android', version: '4.45'
-    implementation 'com.android.volley:volley:1.0.0'
-    implementation 'com.google.code.gson:gson:2.8.0'
-    implementation 'com.android.support:recyclerview-v7:26.0.2'
+    implementation 'com.android.volley:volley:1.1.0'
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.android.support:support-v4:26.1.0'
+    implementation 'com.android.support:exifinterface:26.1.0' // for image capture
 }
