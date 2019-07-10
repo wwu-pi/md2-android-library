@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import de.wwu.md2.android.md2library.controller.eventhandler.implementation.Md2O
 import de.wwu.md2.android.md2library.model.type.implementation.Md2File;
 import de.wwu.md2.android.md2library.model.type.implementation.Md2String;
 import de.wwu.md2.android.md2library.model.type.interfaces.Md2Type;
+import de.wwu.md2.android.md2library.view.management.implementation.Md2ViewManager;
 import de.wwu.md2.android.md2library.view.widgets.interfaces.Md2Content;
 import de.wwu.md2.android.md2library.view.widgets.interfaces.Md2Widget;
 
@@ -141,7 +143,13 @@ public class Md2Image extends ImageView implements Md2Content {
         if(value instanceof Md2File){
             byte[] bytes = ((Md2File) value).getPlatformValue();
             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-            super.setImageBitmap(bitmap);
+
+            DisplayMetrics dm = new DisplayMetrics();
+            Md2ViewManager.getInstance().getActiveView().getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+            setMinimumHeight(dm.heightPixels);
+            setMinimumWidth(dm.widthPixels);
+            setImageBitmap(bitmap);
         }
     }
 
