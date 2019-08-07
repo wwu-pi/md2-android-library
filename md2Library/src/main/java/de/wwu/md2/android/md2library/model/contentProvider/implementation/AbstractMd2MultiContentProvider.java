@@ -172,6 +172,15 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
     }
 
     @Override
+    public void overwriteContent(Md2Entity content){
+        if (content != null) {
+            this.entities = new ArrayList<Md2Entity>();
+            this.entities.add(content);
+        }
+        notifyAllAdapters();
+    }
+
+    @Override
     public void overwriteContent(List<Md2Entity> content){
         if ((content != null)&&(content.isEmpty()==false)) {
             this.entities = new ArrayList<>(content);

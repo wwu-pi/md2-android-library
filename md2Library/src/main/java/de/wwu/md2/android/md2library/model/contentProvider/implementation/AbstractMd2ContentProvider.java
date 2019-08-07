@@ -121,6 +121,15 @@ public abstract class AbstractMd2ContentProvider implements Md2ContentProvider {
             this.load();
         }
     }
+
+    @Override
+    public void overwriteContent(Md2Entity content){
+        if (content != null) {
+            this.content = content;
+        }
+        callAllHandlers();
+    }
+
     @Override
     public void overwriteContent(List<Md2Entity> content){
         if ((content != null)&&(content.isEmpty()==false)) {

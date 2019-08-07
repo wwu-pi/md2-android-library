@@ -9,6 +9,7 @@ import de.wwu.md2.android.md2library.model.type.interfaces.Md2Entity;
  */
 
 public interface IContentProvider {
+    void overwriteContent(Md2Entity content);
     void overwriteContent(List<Md2Entity> content);
     /**
      * Overwrite.
