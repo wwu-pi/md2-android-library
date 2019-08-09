@@ -253,21 +253,6 @@ public class Md2RemoteStore<T extends Md2Entity> extends AbstractMd2DataStore {
         }
     }
 
-
-
-    /**
-     * Try to get internal id. I.e., look for entity in database that has the same values as the entity.
-     *
-     * @param entity the entity
-     * @return the internal id
-     */
-    @Override
-    public void getInternalId(Md2Entity entity) {
-
-    }
-
-
-
     /**
      * Load entity.
      *
@@ -381,8 +366,8 @@ public class Md2RemoteStore<T extends Md2Entity> extends AbstractMd2DataStore {
      * @param md2Entity the md 2 entity
      */
     @Override
-    public void remove(long id, Class md2Entity) {
-        String url = baseURL+"/"+md2Entity.getSimpleName().toLowerCase()+"?id="+id;
+    public void remove(long id, Md2Entity md2Entity) {
+        String url = baseURL+"/"+md2Entity.getClass().getSimpleName().toLowerCase()+"?id="+id;
         StringRequest dr = new StringRequest(Request.Method.DELETE, url,
                 new Response.Listener<String>()
                 {

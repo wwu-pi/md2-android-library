@@ -83,54 +83,54 @@ public class Md2SQLiteDataStore extends AbstractMd2DataStore implements Md2Local
         //return result;
     }
 
-    @Override
-    public void getInternalId(Md2Entity entity) {
-        SQLiteDatabase db = sqLiteHelper.open(false);
-
-        String[] projection = {"_id"};
-
-        String[] columns = sqLiteHelper.getAllColumns(entity.getTypeName());
-
-        String selection = "";
-        for (int i = 0; i < columns.length; i++) {
-            if (i == 0) {
-                selection += columns[i] + " = ?";
-            } else {
-                selection += " AND " + columns[i] + " = ?";
-            }
-        }
-
-        String[] values = new String[columns.length];
-
-        for (int i = 0; i < values.length; i++) {
-            Md2Type value = entity.get(columns[i]);
-            if (value == null) {
-                values[i] = "";
-            } else {
-                values[i] = value.getString().getPlatformValue();
-            }
-        }
-
-        Cursor cursor = db.query(
-                entity.getTypeName().toLowerCase(),  // The table to query
-                projection,                               // The columns to return
-                selection,                                // The columns for the WHERE clause
-                values,                            // The values for the WHERE clause
-                null,                                     // group the rows
-                null,                                     // filter by row groups
-                null                                      // The sort order
-        );
-        cursor.moveToFirst();
-        long id = -1;
-        if (cursor.getCount() > 0) {
-            id = cursor.getLong(cursor.getColumnIndexOrThrow("_id"));
-        }
-        System.out.println("Retrieved Id: " + id);
-
-        cursor.close();
-        db.close();
-        //return id;
-    }
+//    @Override
+//    public void getInternalId(Md2Entity entity) {
+//        SQLiteDatabase db = sqLiteHelper.open(false);
+//
+//        String[] projection = {"_id"};
+//
+//        String[] columns = sqLiteHelper.getAllColumns(entity.getTypeName());
+//
+//        String selection = "";
+//        for (int i = 0; i < columns.length; i++) {
+//            if (i == 0) {
+//                selection += columns[i] + " = ?";
+//            } else {
+//                selection += " AND " + columns[i] + " = ?";
+//            }
+//        }
+//
+//        String[] values = new String[columns.length];
+//
+//        for (int i = 0; i < values.length; i++) {
+//            Md2Type value = entity.get(columns[i]);
+//            if (value == null) {
+//                values[i] = "";
+//            } else {
+//                values[i] = value.getString().getPlatformValue();
+//            }
+//        }
+//
+//        Cursor cursor = db.query(
+//                entity.getTypeName().toLowerCase(),  // The table to query
+//                projection,                               // The columns to return
+//                selection,                                // The columns for the WHERE clause
+//                values,                            // The values for the WHERE clause
+//                null,                                     // group the rows
+//                null,                                     // filter by row groups
+//                null                                      // The sort order
+//        );
+//        cursor.moveToFirst();
+//        long id = -1;
+//        if (cursor.getCount() > 0) {
+//            id = cursor.getLong(cursor.getColumnIndexOrThrow("_id"));
+//        }
+//        System.out.println("Retrieved Id: " + id);
+//
+//        cursor.close();
+//        db.close();
+//        //return id;
+//    }
 
     @Override
     public void put(Md2Entity md2Entity) {
@@ -200,11 +200,11 @@ public class Md2SQLiteDataStore extends AbstractMd2DataStore implements Md2Local
     }
 
     @Override
-    public void remove(long id, Class md2Entity) {
+    public void remove(long id, Md2Entity md2Entity) {
 
         SQLiteDatabase db = sqLiteHelper.open(true);
 
-        db.delete(md2Entity.getSimpleName(), "_id"
+        db.delete(md2Entity.getClass().getSimpleName(), "_id"
                 + " = " + id, null);
         System.out.println("Entity deletion");
 

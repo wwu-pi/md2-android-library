@@ -1,7 +1,7 @@
 package de.wwu.md2.android.md2library.controller.action.implementation;
 
 import de.wwu.md2.android.md2library.model.contentProvider.implementation.Md2ContentProviderRegistry;
-import de.wwu.md2.android.md2library.model.contentProvider.interfaces.IContentProvider;
+import de.wwu.md2.android.md2library.model.contentProvider.interfaces.Md2ContentProvider;
 
 /**
  * Action that triggers a operation in a content provider.
@@ -39,7 +39,7 @@ public class Md2ContentProviderOperationAction extends AbstractMd2Action {
 
     @Override
     public void execute() {
-        IContentProvider cp=null;
+        Md2ContentProvider cp=null;
 if(Md2ContentProviderRegistry.getInstance().getContentProvider(contentProvider)!=null)
         {
           cp = Md2ContentProviderRegistry.getInstance().getContentProvider(contentProvider);

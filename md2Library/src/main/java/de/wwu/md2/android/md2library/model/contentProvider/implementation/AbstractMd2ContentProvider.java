@@ -53,14 +53,6 @@ public abstract class AbstractMd2ContentProvider implements Md2ContentProvider {
      */
 //protected HashMap<String, Md2Type> observedAttributes;
     protected HashMap<String, Md2OnAttributeChangedHandler> attributeChangedEventHandlers;
-    /**
-     * The Internal id.
-     */
-    protected long internalId;
-    /**
-     * The Exists in data store.
-     */
-    protected boolean existsInDataStore;
 
     /**
      * Instantiates a new Abstract md 2 content provider.
@@ -70,41 +62,18 @@ public abstract class AbstractMd2ContentProvider implements Md2ContentProvider {
      * @param md2DataStore the md 2 data store
      */
     public AbstractMd2ContentProvider(String key, Md2Entity content, Md2DataStore md2DataStore) {
-        this.content = content;
-
-        if (content != null) {
-            this.backup = (Md2Entity) content.clone();
-        }
+        this.key = key;
         attributeChangedEventHandlers = new HashMap<>();
         //observedAttributes = new HashMap<>();
+
         this.md2DataStore = md2DataStore;
         md2DataStore.setContentProvider(this);
-        this.existsInDataStore = false;
-        internalId = -1;
-        this.load();
-        this.key = key;
+
+        setContent(content);
     }
 
     public String getKey() {
         return this.key;
-    }
-
-    /**
-     * Gets internal id.
-     *
-     * @return the internal id
-     */
-    protected long getInternalId() {
-        return internalId;
-    }
-
-    /**
-     * Sets internal id.
-     *
-     * @param internalId the internal id
-     */
-    protected void setInternalId(long internalId) {
-        this.internalId = internalId;
     }
 
     @Override
@@ -117,7 +86,6 @@ public abstract class AbstractMd2ContentProvider implements Md2ContentProvider {
         if (content != null) {
             this.content = content;
             this.backup = (Md2Entity) content.clone();
-            this.internalId = -1;
             this.load();
         }
     }
@@ -138,6 +106,7 @@ public abstract class AbstractMd2ContentProvider implements Md2ContentProvider {
         callAllHandlers();
     }
 
+    @Override
     public void updateContent(List<Md2Entity> updates) {
 
         if ((updates != null)&&(updates.isEmpty() == false)) {
@@ -166,6 +135,8 @@ public abstract class AbstractMd2ContentProvider implements Md2ContentProvider {
             }
         }
     }
+
+    /** Notify all handlers about changed attributes */
     protected void callAllHandlers(){
         for (String key: this.attributeChangedEventHandlers.keySet()){
             Md2OnAttributeChangedHandler handler = getOnAttributeChangedHandler(key);
@@ -219,6 +190,11 @@ public abstract class AbstractMd2ContentProvider implements Md2ContentProvider {
     }
 
     @Override
+    public void resetLocal(){
+        newEntity();
+    }
+
+    @Override
     public void load() {
 //        if (content == null | md2DataStore == null)
 //            return;
@@ -242,8 +218,9 @@ public abstract class AbstractMd2ContentProvider implements Md2ContentProvider {
 //            this.content.setId(id);
 //
 //        }
-        this.syncTimestamp = new Timestamp(System.currentTimeMillis());
-        md2DataStore.query(this.filter);
+        //this.syncTimestamp = new Timestamp(System.currentTimeMillis());
+        //md2DataStore.query(this.filter);
+        md2DataStore.load(content.getId(), content.getClass());
     }
 
     @Override
@@ -251,33 +228,33 @@ public abstract class AbstractMd2ContentProvider implements Md2ContentProvider {
         if (content == null || md2DataStore == null)
             return;
         if (content.getId()>0)
+            // update existing element
             md2DataStore.put(content.getId(), this.content);
         else {
+            // new element
             md2DataStore.put(this.content);
         }
         this.backup = (Md2Entity) content.clone();
     }
+
     @Override
     public void update(){
-        if(!(this.md2DataStore instanceof Md2LocalStore)) {
-            Timestamp oldStamp = syncTimestamp;
-            this.syncTimestamp = new Timestamp(System.currentTimeMillis());
-            //if(!(this.md2DataStore instanceof AbstractMd2OrmLiteDatastore)){
-            md2DataStore.query(this.filter, oldStamp);
-            //}
-        }
+        // Nothing to load for local stores
+        if(this.md2DataStore instanceof Md2LocalStore) return;
+
+        Timestamp oldStamp = syncTimestamp;
+        this.syncTimestamp = new Timestamp(System.currentTimeMillis());
+        md2DataStore.query(this.filter, oldStamp);
     }
+
     @Override
     public void remove() {
         if (content == null || md2DataStore == null) return;
 
-        md2DataStore.remove(internalId, content.getClass());
-
+        md2DataStore.remove(content.getId(), content);
     }
 
-    public void newEntity(){
-        //konkrete Implementierung im Generator
-    }
+    public abstract void newEntity();
 
 
     public void notfiyOnChangeHandlers(){
@@ -293,10 +270,4 @@ public abstract class AbstractMd2ContentProvider implements Md2ContentProvider {
             handler.onChange(name);
         }
     }
-
-    @Override
-    public void resetLocal(){
-        newEntity();
-    }
-
 }

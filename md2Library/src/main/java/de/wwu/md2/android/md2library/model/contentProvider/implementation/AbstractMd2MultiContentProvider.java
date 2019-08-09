@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import de.wwu.md2.android.md2library.controller.eventhandler.implementation.Md2OnAttributeChangedHandler;
 import de.wwu.md2.android.md2library.model.contentProvider.interfaces.Md2MultiContentProvider;
 import de.wwu.md2.android.md2library.model.dataStore.Filter;
 import de.wwu.md2.android.md2library.model.dataStore.interfaces.Md2DataStore;
@@ -16,8 +17,7 @@ import de.wwu.md2.android.md2library.model.type.interfaces.Md2Type;
 
 public abstract class AbstractMd2MultiContentProvider implements Md2MultiContentProvider {
 
-
-    protected Collection<Md2Entity> entities;
+    protected ArrayList<Md2Entity> entities;
     protected Timestamp syncTimestamp;
     private String key;
     protected Md2DataStore dataStore;
@@ -87,7 +87,7 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
 
     public void removeAll() {
         for(Md2Entity e : entities){
-            this.dataStore.remove(e.getId(), e.getClass()); // TODO check if correct behaviour?!
+            this.dataStore.remove(e.getId(), e); // TODO check if correct behaviour?!
         }
         this.entities.clear();
         currentIndex = 0;
@@ -145,14 +145,14 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
 
 
     public void remove() {
-        dataStore.remove(((Md2Entity)((ArrayList)this.entities).get(currentIndex)).getId(),((ArrayList)this.entities).get(currentIndex).getClass() );
+        dataStore.remove(((Md2Entity)((ArrayList)this.entities).get(currentIndex)).getId(),((ArrayList<Md2Entity>)this.entities).get(currentIndex));
         ((ArrayList<Md2Entity>) entities).remove(currentIndex);
         currentIndex = 0;
         notifyAllAdapters();
     }
 
     public void remove(int i) {
-        dataStore.remove(((Md2Entity)((ArrayList)this.entities).get(i)).getId(),((ArrayList)this.entities).get(i).getClass() );
+        dataStore.remove(((Md2Entity)((ArrayList)this.entities).get(i)).getId(), ((ArrayList<Md2Entity>)this.entities).get(i));
         ((ArrayList<Md2Entity>) entities).remove(i);
         notifyAllAdapters();
     }
@@ -165,7 +165,9 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
 
     public abstract void setValue(int entityIndex, String name, Md2Type value);
 
-    public void setValueForAll(String name, Md2Type value){
+    /** sets value for all elements! */
+    @Override
+    public void setValue(String name, Md2Type value){
         for(int i = 0; i < entities.size(); i++){
             setValue(i, name, value);
         }
@@ -255,6 +257,39 @@ public abstract class AbstractMd2MultiContentProvider implements Md2MultiContent
         notifyAllAdapters();
     }
 
+    @Override
+    public void setContent(Md2Entity content) {
+        if (content != null) {
+            this.entities = new ArrayList<Md2Entity>();
+            this.entities.add(content);
+            this.load();
+        }
+    }
+
+    @Override
+    public Md2Entity getContent() {
+        throw new RuntimeException("Multicontentprovider has not just one content!");
+    }
+
+    @Override
+    public void registerAttributeOnChangeHandler(String s, Md2OnAttributeChangedHandler md2OnAttributeChangedHandler) {
+        throw new RuntimeException("Multicontentprovider has not just one content!");
+    }
+
+    @Override
+    public void unregisterAttributeOnChangeHandler(String s) {
+        throw new RuntimeException("Multicontentprovider has not just one content!");
+    }
+
+    @Override
+    public Md2OnAttributeChangedHandler getOnAttributeChangedHandler(String s) {
+        throw new RuntimeException("Multicontentprovider has not just one content!");
+    }
+
+    @Override
+    public Md2Type getValue(String s) {
+        throw new RuntimeException("Multicontentprovider has not just one content!");
+    }
 }
 
 

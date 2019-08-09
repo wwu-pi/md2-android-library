@@ -47,7 +47,7 @@ public class Md2AttributeSetTask implements Md2CustomCodeTask {
         if(Md2ContentProviderRegistry.getInstance().getContentProvider(contentProvider) != null) {
             Md2ContentProviderRegistry.getInstance().getContentProvider(contentProvider).setValue(attribute, value);
         } else if (Md2ContentProviderRegistry.getInstance().getContentMultiProvider(contentProvider) != null){
-            Md2ContentProviderRegistry.getInstance().getContentMultiProvider(contentProvider).setValueForAll(attribute, value);
+            Md2ContentProviderRegistry.getInstance().getContentMultiProvider(contentProvider).setValue(attribute, value); // sets value for all
         }
     }
 

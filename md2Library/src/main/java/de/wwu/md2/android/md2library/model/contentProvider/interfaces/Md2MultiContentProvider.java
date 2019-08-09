@@ -12,7 +12,7 @@ import de.wwu.md2.android.md2library.model.type.interfaces.Md2Type;
  * Created by felix_000 on 07.05.2017.
  */
 
-public interface Md2MultiContentProvider  extends IContentProvider{
+public interface Md2MultiContentProvider  extends Md2ContentProvider{
 
 public void addAdapter(RecyclerView.Adapter adapter, String key);
 
@@ -26,7 +26,6 @@ public void setCurrentIndex(int i);
 
  public  Md2Type getValue(int entityIndex, String attribute);
  public  void setValue(int entityIndex, String name, Md2Type value);
- public void setValueForAll(String name, Md2Type value);
 public void reset();
 
 //TODO: Merge

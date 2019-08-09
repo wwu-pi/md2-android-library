@@ -1,5 +1,7 @@
 package de.wwu.md2.android.md2library.model.contentProvider.interfaces;
 
+import java.util.List;
+
 import de.wwu.md2.android.md2library.controller.eventhandler.implementation.Md2OnAttributeChangedHandler;
 import de.wwu.md2.android.md2library.model.type.interfaces.Md2Entity;
 import de.wwu.md2.android.md2library.model.type.interfaces.Md2Type;
@@ -14,7 +16,7 @@ import de.wwu.md2.android.md2library.model.type.interfaces.Md2Type;
  * @version 1.0
  * @since 1.0
  */
-public interface Md2ContentProvider extends IContentProvider {
+public interface Md2ContentProvider {
     /**
      * Gets key.
      *
@@ -35,6 +37,10 @@ public interface Md2ContentProvider extends IContentProvider {
      * @param content the content
      */
     void setContent(Md2Entity content);
+
+    /** set content directly without loading it from the database */
+    void overwriteContent(Md2Entity content);
+    void overwriteContent(List<Md2Entity> content);
 
     /**
      * Register attribute on change handler.
@@ -76,29 +82,35 @@ public interface Md2ContentProvider extends IContentProvider {
     void setValue(String attribute, Md2Type value);
 
     /**
-     * Reset.
+     * Reset content provider to empty element.
      */
     void reset();
 
     /**
-     * Load.
+     * Reset local content provider to the remote element.
+     */
+    void resetLocal();
+
+    /**
+     * Load from the database.
      */
     void load();
 
     /**
-     * Save.
+     * Save a new or existing element to the database.
      */
     void save();
 
     /**
-     * Remove.
+     * Remove from database.
      */
     void remove();
 
-
-
-    /**
-     * Update.
-     */
+    /** Replace current version of content from the most recent version from the datastore */
     void update();
+
+    /** Replace current version of content from the most recent version in the list of elements */
+    void updateContent(List<Md2Entity> updates);
+    /** Remove current version of content if it has been removed in the meantime */
+    void purgeContent(List<Md2Entity> updates);
 }

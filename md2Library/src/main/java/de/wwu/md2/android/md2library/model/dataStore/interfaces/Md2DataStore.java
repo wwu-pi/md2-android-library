@@ -2,7 +2,7 @@ package de.wwu.md2.android.md2library.model.dataStore.interfaces;
 
 import java.sql.Timestamp;
 
-import de.wwu.md2.android.md2library.model.contentProvider.interfaces.IContentProvider;
+import de.wwu.md2.android.md2library.model.contentProvider.interfaces.Md2ContentProvider;
 import de.wwu.md2.android.md2library.model.dataStore.Filter;
 import de.wwu.md2.android.md2library.model.type.interfaces.Md2Entity;
 
@@ -16,10 +16,10 @@ import de.wwu.md2.android.md2library.model.type.interfaces.Md2Entity;
  * @since 1.0
  */
 public interface Md2DataStore<T extends Md2Entity> {
-    public IContentProvider getContentProvider();
+    public Md2ContentProvider getContentProvider();
 
 
-    public void setContentProvider(IContentProvider contentProvider) ;
+    public void setContentProvider(Md2ContentProvider contentProvider) ;
 
     /**
      * Execute query in data store.
@@ -36,7 +36,7 @@ public interface Md2DataStore<T extends Md2Entity> {
      * @param entity the entity
      * @return the internal id
      */
-    void getInternalId(Md2Entity entity);
+    //void getInternalId(Md2Entity entity);
 
     /**
      * Load entity.
@@ -70,5 +70,5 @@ public interface Md2DataStore<T extends Md2Entity> {
      * @param id        the id
      * @param md2Entity the md 2 entity
      */
-    void remove(long id, Class md2Entity);
+    void remove(long id, Md2Entity md2Entity);
 }

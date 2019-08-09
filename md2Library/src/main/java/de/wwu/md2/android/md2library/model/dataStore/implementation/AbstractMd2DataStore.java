@@ -1,7 +1,7 @@
 package de.wwu.md2.android.md2library.model.dataStore.implementation;
         import java.sql.Timestamp;
 
-        import de.wwu.md2.android.md2library.model.contentProvider.interfaces.IContentProvider;
+        import de.wwu.md2.android.md2library.model.contentProvider.interfaces.Md2ContentProvider;
         import de.wwu.md2.android.md2library.model.dataStore.AtomicExpression;
         import de.wwu.md2.android.md2library.model.dataStore.CombinedExpression;
         import de.wwu.md2.android.md2library.model.dataStore.Filter;
@@ -21,13 +21,13 @@ package de.wwu.md2.android.md2library.model.dataStore.implementation;
  * @since 1.0
  */
 public abstract class AbstractMd2DataStore<T extends Md2Entity> implements Md2DataStore<T> {
-        protected IContentProvider contentProvider;
+        protected Md2ContentProvider contentProvider;
 
-        public IContentProvider getContentProvider() {
+        public Md2ContentProvider getContentProvider() {
                 return contentProvider;
         }
 
-        public void setContentProvider(IContentProvider contentProvider) {
+        public void setContentProvider(Md2ContentProvider contentProvider) {
                 this.contentProvider = contentProvider;
         }
 
